@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShopRestService } from '../shop-rest.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-shop',
@@ -11,9 +12,11 @@ export class ShopComponent implements OnInit {
 
 	products:any = {};
 
-	constructor(public rest:ShopRestService, private route: ActivatedRoute, private router: Router) { }
+	constructor(public rest:ShopRestService, private route: ActivatedRoute, 
+		private router: Router, private titleService: Title) { }
 
 	ngOnInit() {
+		this.titleService.setTitle( 'Shop Display: Home' );
 		this.getContent();
 	}
 
