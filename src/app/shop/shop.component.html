@@ -1,0 +1,17 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>{{title}}</title>
+</head>
+<body>
+<h2>Product List</h2>
+
+<ul class="products">
+  <li *ngFor="let p of products.itemList; let i=index;">
+    
+      <span>{{i+1}}</span> {{p.title}} {{p.manufacturer}}
+    
+  </li>
+</ul>
+</body>
+</html>
