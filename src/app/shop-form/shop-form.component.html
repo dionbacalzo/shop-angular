@@ -1,0 +1,24 @@
+<div [hidden]="hideItemList">
+  <form [formGroup]="productForm">
+    <div formArrayName="itemList" class="col-12">
+      <div id="uploadItemtitle" class="col-12">
+        Item List
+      </div>
+      <button (click)="addProduct()">Add Item</button>
+      <button (click)="resetProducts()">Reset Items</button>
+      <div *ngFor="let item of itemList.controls; let i=index">
+        <div [formGroupName]="i" class="col-12">
+          <input type="text" formControlName="title" class="col-3">
+          <input type="text" formControlName="manufacturer" class="col-3">
+          <input type="text" formControlName="price" class="col-2">
+          <input type="text" formControlName="releaseDate" class="col-2">
+          <input type="text" formControlName="type" class="col-2">
+        </div>
+      </div>
+      <button type="submit" (click)="onSubmit()">Save</button>
+    </div>
+  </form>
+  <p>
+    {{saveResult}}
+  </p>
+</div>

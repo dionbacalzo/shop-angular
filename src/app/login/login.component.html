@@ -1,0 +1,22 @@
+<div class="col-12">
+  <div class="col-2">&nbsp;</div>
+  <div class="col-8">
+    <h4>Login</h4>
+    <form id="loginForm" role="form" (submit)="login()">
+      <div class="col-12" class="form-group">
+        <label class="col-2" for="username">Username:</label>
+        <input class="col-10" type="text" class="form-control" id="username" name="username" [(ngModel)]="credentials.username" />
+      </div>
+      <div class="col-12" class="form-group">
+        <label class="col-2" for="password">Password:</label>
+        <input class="col-10" type="password" class="form-control" id="password" name="password" [(ngModel)]="credentials.password" />
+      </div>
+      <div class="col-12" class="form-group">
+        <label class="col-3" for="rememberMe">Remember Me:</label>
+        <input class="col-9" type="checkbox" class="form-control" id="rememberMe" name="rememberMe" [(ngModel)]="credentials.rememberMe" />
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  <div class="col-2">&nbsp;</div>
+</div>

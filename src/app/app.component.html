@@ -1,1 +1,26 @@
-<router-outlet></router-outlet>
+<div id="header" class="col-12">
+  <h1>SHOP</h1>
+</div>
+<div class="col-3">&nbsp;</div>
+<div class="col-6">
+  <div id="main-navbar" class="col-12">
+    <ul>
+      <li><a routerLinkActive="active" routerLink="/shop/content">Home</a></li>
+      <li><a routerLinkActive="active" routerLink="/shop/upload">Update</a></li>
+      <div [hidden]="isAuthenticated()">
+        <li><a routerLinkActive="active" routerLink="/shop/login">Login</a></li>
+      </div>
+      <div [hidden]="!isAuthenticated()">
+        <li><a (click)="logout()">Logout</a></li>
+      </div>
+    </ul>
+  </div>
+  <div id="content" class="col-12">
+    <app-message></app-message>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<div class="col-3">&nbsp;</div>
+<div id="footer" class="col-12">
+  <h2>Copyright 2018</h2>
+</div>

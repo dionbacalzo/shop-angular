@@ -1,47 +1,47 @@
-
-<div class="col-3">&nbsp;</div>
-<div class="col-6">
-	<div id="itemTableContainer" class="col-10">
-		<div class="col-12">
-		<button id="addItem">Add</button>
-		<button id="saveContent">Save</button>
-	</div>
-	<div id="uploadItemtitle" class="col-12">
-		Item List
-	</div>
-	<table id="uploadItemTable" class="col-12">
-		<thead>
-			<tr><th>Title</th>
-			<th>Price</th>
-			<th>Type</th>
-			<th>Manufacturer</th>
-			<th>Release Date</th>
-			<th>Delete</th>
-		</tr></thead>
-		<tbody>
-		<tr *ngFor="let p of products.itemList; let i=index;">
-			<td contenteditable="" class="itemAttr-title">
-				{{p.title}}
-			</td>
-			<td contenteditable="" class="itemAttr-price">
-				{{p.price}}
-			</td>
-			<td contenteditable="" class="itemAttr-type">
-				{{p.type}}
-			</td>
-			<td contenteditable="" class="itemAttr-manufacturer">
-				{{p.manufacturer}}
-			</td>
-			<td contenteditable="" class="itemAttr-releaseDate">
-				{{p.releaseDate}}
-			</td>
-			<td>
-				<button class="deleteButton"></button>
-			</td>
-		</tr>
-		
-		</tbody>
-	</table>
-	</div>
+<div id="itemTableContainer" class="col-10" [hidden]="hideItemList">
+  <div id="uploadItemtitle" class="col-12">
+    Item List
+  </div>
+  <table id="uploadItemTable" class="col-12">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Type</th>
+        <th>Manufacturer</th>
+        <th>Release Date</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products?.itemList; let i=index;">
+        <td contenteditable="" class="itemAttr-title">
+          {{p?.title}}
+        </td>
+        <td contenteditable="" class="itemAttr-price">
+          {{p?.price}}
+        </td>
+        <td contenteditable="" class="itemAttr-type">
+          {{p?.type}}
+        </td>
+        <td contenteditable="" class="itemAttr-manufacturer">
+          {{p?.manufacturer}}
+        </td>
+        <td contenteditable="" class="itemAttr-releaseDate">
+          {{p?.releaseDate}}
+        </td>
+        <td>
+          <button class="deleteButton"></button>
+        </td>
+        <form class="hidden" method="POST" action="/shop">
+          <input class="hidden" name="id" type="text" [value]="p.id">
+          <input class="hidden" name="title" type="text" [value]="p.title">
+          <input class="hidden" name="price" type="text" [value]="p.price">
+          <input class="hidden" name="type" type="text" [value]="p.type">
+          <input class="hidden" name="manufacturer" type="text" [value]="p.manufacturer">
+          <input class="hidden" name="releaseDate" type="text" [value]="p.releaseDate">
+        </form>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<div class="col-3">&nbsp;</div>
