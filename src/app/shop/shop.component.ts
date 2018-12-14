@@ -36,11 +36,11 @@ export class ShopComponent implements OnInit {
 			this.products = data;
 			if (!this.products) {
 				this.hideItemList = true;
-			} else if (!this.products.itemList.length) {
+			} else if (!this.products.itemList) {
 				let message = {
-					title: "Error",
+					error: "Error",
 					type: "warn",
-					body: "No Items found"
+					messageDisplay: "No Items found"
 				};
 				this.messageService.add(message);
 				this.hideItemList = true;
