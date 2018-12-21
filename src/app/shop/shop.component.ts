@@ -1,10 +1,13 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import { HttpClient } from "@angular/common/http";
+import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 
 import { ShopRestService } from "../shop-rest.service";
 import { MessageService } from "../message.service";
+import { InventoryItem } from "../inventory-item";
+
 
 @Component({
 	selector: "app-shop",
@@ -13,7 +16,12 @@ import { MessageService } from "../message.service";
 })
 export class ShopComponent implements OnInit {
 	hideItemList: boolean = true;
-	products: any = {};
+	products: any[] =[];
+
+	displayedColumns: string[] = ['title', 'price', 'type', 'manufacturer', 'releaseDate'];
+	dataSource: MatTableDataSource<InventoryItem<{}>>;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
 
 	constructor(
 		private rest: ShopRestService,
@@ -21,8 +29,8 @@ export class ShopComponent implements OnInit {
 		private router: Router,
 		private titleService: Title,
 		private http: HttpClient,
-		public messageService: MessageService
-	) {}
+		private messageService: MessageService
+	) { }
 
 	ngOnInit() {
 		this.titleService.setTitle("Shop Display: Home");
@@ -31,12 +39,11 @@ export class ShopComponent implements OnInit {
 	}
 
 	getContent() {
-		this.products = {};
-		this.rest.getContent().subscribe((data: {}) => {
-			this.products = data;
-			if (!this.products) {
+		this.products = [];
+		this.rest.getContent().subscribe((data: {itemList:[]}) => {			
+			if (!data) {
 				this.hideItemList = true;
-			} else if (!this.products.itemList) {
+			} else if (!data["itemList"]) {
 				let message = {
 					error: "Error",
 					type: "warn",
@@ -44,9 +51,24 @@ export class ShopComponent implements OnInit {
 				};
 				this.messageService.add(message);
 				this.hideItemList = true;
-			} else {
+			} else {				
+				data["itemList"].forEach((item:{}) => {
+					this.products.push(new InventoryItem(item));
+				});
+				
+				this.dataSource = new MatTableDataSource(this.products);
+				this.dataSource.paginator = this.paginator;
+    			this.dataSource.sort = this.sort;
 				this.hideItemList = false;
 			}
 		});
+	}
+
+	applyFilter(filterValue: string) {
+		this.dataSource.filter = filterValue.trim().toLowerCase();
+
+		if (this.dataSource.paginator) {
+			this.dataSource.paginator.firstPage();
+		}
 	}
 }

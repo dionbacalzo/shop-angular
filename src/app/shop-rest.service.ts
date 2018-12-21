@@ -19,10 +19,6 @@ const endpoint = "http://localhost:8080/shop/";
 const httpOptions = {
 	loginHeaders: new HttpHeaders({
 		"Content-Type": "application/x-www-form-urlencoded"
-	}),
-	logoutHeaders: new HttpHeaders({
-		"Content-Type": "application/x-www-form-urlencoded",
-		"Access-Control-Allow-Origin": "http://localhost:8080"
 	})
 };
 @Injectable({
@@ -59,20 +55,11 @@ export class ShopRestService implements HttpInterceptor {
 				headers: httpOptions.loginHeaders,
 				responseType: "text"
 			})
-			.subscribe(
-				data => {
-					this.data = data;
-					this.getAuthentication().subscribe();
-					return callback && callback();
-				},
-				catchError(
-					this.handleError(
-						new ErrorMessage({
-							messageDisplay: "Invalid Username or Password"
-						})
-					)
-				)
-			);
+			.subscribe(data => {
+				this.data = data;
+				//this.getAuthentication().subscribe();
+				return callback && callback(data);
+			}, catchError(this.handleError("You are unable to login at this moment")));
 	}
 
 	getAuthentication(): Observable<any> {
@@ -85,10 +72,7 @@ export class ShopRestService implements HttpInterceptor {
 				}),
 				catchError(
 					this.handleError(
-						new ErrorMessage({
-							messageDisplay:
-								"Unable to retrieve User information. Try again later"
-						})
+						"Unable to retrieve User information. Try again later"
 					)
 				)
 			);
@@ -118,63 +102,57 @@ export class ShopRestService implements HttpInterceptor {
 
 		return this.http.get(endpoint + "viewListUnparsed").pipe(
 			map(this.extractData),
-			catchError(
-				this.handleError<{}>(
-					new ErrorMessage({
-						messageDisplay: "Unable to retrieve Item List"
-					})
-				)
-			)
+			catchError(this.handleError<{}>("Unable to retrieve Item List"))
 		);
 	}
 
-	saveContent(productList): Observable<any> {
+	saveContent(productList: {}): Observable<any> {
 		this.getAuthentication().subscribe();
 		this.messageService.clear();
 
-		if (productList["itemList"]) {
-			return this.http
-				.post(endpoint + "save", productList["itemList"])
-				.pipe(
-					map(this.extractData),
-					catchError(
-						this.handleError(
-							new ErrorMessage({
-								messageDisplay: "Unable to Retrieve Item List"
-							})
-						)
+		if (productList) {
+			return this.http.post(endpoint + "save", productList).pipe(
+				map(this.extractData),
+				catchError(
+					this.handleError<{}>(
+						"Unable to Save Item List: Invalid Content"
 					)
-				);
+				)
+			);
 		} else {
 			this.messageService.clear();
-			this.handleError(
-				new ErrorMessage({
-					messageDisplay: "Unable to Save Item List: Invalid Content"
-				})
-			);
-			return empty();
+			this.handleError("Unable to Save Item List: Invalid Content");			
 		}
 	}
 
-	public handleError<T>(message?: ErrorMessage<{}>, result?: T) {
-		return (error: any, caught: Observable<T>): Observable<T> => {
+	public handleError<T>(message?: string, result?: T) {
+		return (error: HttpErrorResponse): Observable<T> => {
 			// TODO: send the error to remote logging infrastructure
-
-			if (!message) {
-				let message = new ErrorMessage({
+			//Authentication Error
+			if (error.status === 401 || error.status === 403) {
+				let loginMessage = new ErrorMessage({
+					errorInfo: error,
+					type: "error",
+					messageDisplay: "Login in order to continue"
+				});
+				this.messageService.add(loginMessage);
+				//Generic Error Message
+			} else if (!message) {
+				let errorMessage = new ErrorMessage({
 					errorInfo: error,
 					type: "error",
 					messageDisplay: "Error has occured"
 				});
+				this.messageService.add(errorMessage);
 			} else {
-				if (!message.getType()) {
-					message.setType("error");
-				}
-				if (!message.errorInfo) {
-					message.errorInfo = error;
-				}
+				let errorMessage = new ErrorMessage({
+					errorInfo: error,
+					type: "error",
+					messageDisplay: message
+				});
+				this.messageService.add(errorMessage);
 			}
-			this.messageService.add(message);			
+
 			// Let the app keep running by returning an empty result.
 			return of(result as T);
 		};

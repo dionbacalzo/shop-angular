@@ -5,11 +5,11 @@
     <form id="loginForm" role="form" (submit)="login()">
       <div class="col-12" class="form-group">
         <label class="col-2" for="username">Username:</label>
-        <input class="col-10" type="text" class="form-control" id="username" name="username" [(ngModel)]="credentials.username" />
+        <input class="col-10" type="text" class="form-control" id="username" name="username" [(ngModel)]="credentials.username" required/>
       </div>
       <div class="col-12" class="form-group">
         <label class="col-2" for="password">Password:</label>
-        <input class="col-10" type="password" class="form-control" id="password" name="password" [(ngModel)]="credentials.password" />
+        <input class="col-10" type="password" class="form-control" id="password" name="password" [(ngModel)]="credentials.password" required/>
       </div>
       <div class="col-12" class="form-group">
         <label class="col-3" for="rememberMe">Remember Me:</label>

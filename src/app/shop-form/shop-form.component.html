@@ -1,24 +1,63 @@
 <div [hidden]="hideItemList">
   <form [formGroup]="productForm">
-    <div formArrayName="itemList" class="col-12">
-      <div id="uploadItemtitle" class="col-12">
-        Item List
-      </div>
+    <div formArrayName="itemList">
+      <div id="uploadItemtitle">Item List</div>
       <button (click)="addProduct()">Add Item</button>
       <button (click)="resetProducts()">Reset Items</button>
-      <div *ngFor="let item of itemList.controls; let i=index">
+      <div *ngFor="let item of itemList.controls; let i = index" class="col-12">
         <div [formGroupName]="i" class="col-12">
-          <input type="text" formControlName="title" class="col-3">
-          <input type="text" formControlName="manufacturer" class="col-3">
-          <input type="text" formControlName="price" class="col-2">
-          <input type="text" formControlName="releaseDate" class="col-2">
-          <input type="text" formControlName="type" class="col-2">
+          <mat-form-field class="col-3" floatLabel="never">
+            <input matInput type="text" formControlName="title" required />
+          </mat-form-field>
+          <mat-form-field class="col-2" floatLabel="never">
+            <input
+              matInput
+              type="text"
+              formControlName="manufacturer"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field class="col-2" floatLabel="never">
+            <input matInput type="number" formControlName="price" required />
+          </mat-form-field>
+          <!--<input type="date" formControlName="releaseDate" class="col-2">-->
+          <mat-form-field class="col-2" floatLabel="never">
+            <input
+              formControlName="releaseDate"
+              matInput
+              [matDatepicker]="picker2"
+              placeholder="MM/DD/YYYY"
+              required
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker2"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="col-2" floatLabel="never">
+            <!--<input matInput type="text" formControlName="type" class="col-2">-->
+            <mat-select formControlName="type" required>
+              <mat-option value="phone">Phone</mat-option>
+              <mat-option value="laptop">Laptop</mat-option>
+              <mat-option value="accessory">Accessory</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="col-1">
+            <button class="deleteButton" (click)="deleteProduct(i)"></button>
+          </div>
         </div>
       </div>
-      <button type="submit" (click)="onSubmit()">Save</button>
+      
+      <div class="col-12">
+        <button
+          type="submit"
+          (click)="onSubmit()"
+          [disabled]="productForm.invalid || productForm.untouched"
+        >
+          Save
+        </button>
+      </div>
     </div>
   </form>
-  <p>
-    {{saveResult}}
-  </p>
 </div>

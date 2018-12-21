@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
+import { HttpErrorResponse } from "@angular/common/http";
 
 @Injectable({
 	providedIn: "root"
@@ -19,8 +20,8 @@ export class MessageService {
 
 	clear() {
 		if (this.messages && this.messages.length) {
-			let index: number = this.messages.length - 1;			
-			while (index >= 0) {				
+			let index: number = this.messages.length - 1;
+			while (index >= 0) {
 				let currentPersistTime = this.messages[index].getPersist();
 				if (this.messages[index].getPersist() == 0) {
 					this.messages.splice(index, 1);
@@ -32,7 +33,7 @@ export class MessageService {
 					this.messages.splice(index, 1);
 				}
 				index -= 1;
-			}			
+			}
 		}
 		this.messageSubject.next(this.messages);
 	}
@@ -42,19 +43,16 @@ export class Message<T> {
 	private type: string;
 	private messageDisplay: string;
 	/**
-	 *	persist can have values 'none', 'once', and 'always'
-	 *	if the value is none the message will be deleted with the next use of the clear function
-	 *	if the the value is once it will retain after one more display
-	 *   if the value is numeric it will display the number of times until it reacher 0
+	 *	persist will display the number of times per clear until it reaches 0
 	 */
 	private persist: number;
 
 	constructor(
 		options: {
-			type?: string;
-			messageDisplay?: string;
+			type: string;
+			messageDisplay: string;
 			persist?: number;
-		} = {}
+		} = { type: "", messageDisplay: "" }
 	) {
 		this.type = options.type;
 		this.messageDisplay = options.messageDisplay;
@@ -94,17 +92,27 @@ export class Message<T> {
 }
 
 export class ErrorMessage<T> extends Message<T> {
-	errorInfo: string;
+	errorInfo: HttpErrorResponse;
 
 	constructor(
 		options: {
-			errorInfo?: string;
+			errorInfo?: HttpErrorResponse;
 			type?: string;
-			messageDisplay?: string;
+			messageDisplay: string;
 			persist?: number;
-		} = {}
+		} = { messageDisplay: "" }
 	) {
-		super(options);
+		if (!options.type) {
+			options.type = "error";
+		}
+		let errorMessage = {
+			errorInfo: options.errorInfo,
+			type: "error",
+			messageDisplay: options.messageDisplay,
+			persist: options.persist
+		};
+
+		super(errorMessage);
 		this.errorInfo = options.errorInfo;
 	}
 }

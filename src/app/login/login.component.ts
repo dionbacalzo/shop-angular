@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 
-import { MessageService, Message } from "../message.service";
+import { MessageService, Message, ErrorMessage } from "../message.service";
 
 @Component({
   templateUrl: "./login.component.html"
@@ -27,15 +27,26 @@ export class LoginComponent {
   }
 
   login() {
-    this.rest.authenticate(this.credentials, () => {
-      this.messageService.add(
-        new Message({
-          type: "info",
-          messageDisplay: "Successfully Logged in",
-          persist: 1
-        })
-      );
-      this.router.navigateByUrl("/shop");
+    this.rest.authenticate(this.credentials, data => {
+      if (data) {
+        this.messageService.clear();
+        if (data === "FAIL") {
+          this.messageService.add(
+            new ErrorMessage({
+              messageDisplay: "Username or Password is incorrect"
+            })
+          );
+        } else {
+          this.messageService.add(
+            new Message({
+              type: "info",
+              messageDisplay: "Successfully logged in",
+              persist: 1
+            })
+          );
+          this.router.navigateByUrl("/shop");
+        }
+      }
     });
   }
 

@@ -149,6 +149,24 @@ h1, h2 {
 	animation-duration: 0.4s
 }
 
+button {
+  font-family: Arial;
+  background-color: #81b2ff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: hand;
+}
+button:hover {
+  background-color: #2d6bcc;
+}
+button:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: auto;
+}
+
 /* The Close Button */
 .close {
 	color: #fff;
@@ -225,3 +243,5 @@ h1, h2 {
 		z-index: 1;
 	}
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
