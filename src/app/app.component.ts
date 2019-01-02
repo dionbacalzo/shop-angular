@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ShopRestService } from './shop-rest.service';
+import { AuthenticationService } from './service/authentication.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -9,13 +9,13 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AppComponent {    
 
-	  constructor(private rest: ShopRestService) { }
+	  constructor(private authService: AuthenticationService) { }
 
     logout() {
-		  this.rest.logout();
+		  this.authService.logout().subscribe();;
     }
 
-    isAuthenticated(){        
-      return this.rest.authenticated;
+    get isAuthenticated(): boolean{        
+      return this.authService.authenticated;
     }
 }

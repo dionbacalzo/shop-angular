@@ -11,8 +11,9 @@ import { ShopComponent } from "./shop/shop.component";
 import { ShopFormComponent } from "./shop-form/shop-form.component";
 import { LoginComponent } from "./login/login.component";
 
-import { ShopRestService } from "./shop-rest.service";
-import { MessageService } from "./message.service";
+import { ShopRestService } from "./service/shop-rest.service";
+import { MessageService } from "./service/message.service";
+import { AuthenticationService } from "./service/authentication.service";
 
 import { MessageComponent } from "./message/message.component";
 
@@ -81,10 +82,11 @@ const appRoutes: Routes = [
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,
-			useClass: ShopRestService,
+			useClass: AuthenticationService,
 			multi: true
 		},
-		MessageService
+		MessageService,
+		ShopRestService		
 	],
 	bootstrap: [AppComponent]
 })

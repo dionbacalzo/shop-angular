@@ -12,8 +12,8 @@ import {
 
 import { InventoryItem } from "../inventory-item";
 
-import { ShopRestService } from "../shop-rest.service";
-import { MessageService, Message } from "../message.service";
+import { ShopRestService } from "../service/shop-rest.service";
+import { MessageService, Message } from "../service/message.service";
 
 @Component({
 	selector: "app-shop-form",

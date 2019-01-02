@@ -7,10 +7,10 @@
     <ul>
       <li><a routerLinkActive="active" routerLink="/shop/content">Home</a></li>
       <li><a routerLinkActive="active" routerLink="/shop/update">Update</a></li>
-      <div [hidden]="isAuthenticated()">
+      <div [hidden]="isAuthenticated">
         <li><a routerLinkActive="active" routerLink="/shop/login">Login</a></li>
       </div>
-      <div [hidden]="!isAuthenticated()">
+      <div [hidden]="!isAuthenticated">
         <li><a (click)="logout()">Logout</a></li>
       </div>
     </ul>

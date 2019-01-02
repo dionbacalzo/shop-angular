@@ -4,8 +4,8 @@ import { Title } from "@angular/platform-browser";
 import { HttpClient } from "@angular/common/http";
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 
-import { ShopRestService } from "../shop-rest.service";
-import { MessageService } from "../message.service";
+import { ShopRestService } from "../service/shop-rest.service";
+import { MessageService } from "../service/message.service";
 import { InventoryItem } from "../inventory-item";
 
 

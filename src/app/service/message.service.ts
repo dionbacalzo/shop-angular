@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
-import { HttpErrorResponse } from "@angular/common/http";
+import { HttpErrorResponse, HttpEvent } from "@angular/common/http";
+import { Observable, of } from "rxjs";
 
 @Injectable({
 	providedIn: "root"
@@ -36,6 +37,35 @@ export class MessageService {
 			}
 		}
 		this.messageSubject.next(this.messages);
+	}
+
+	handleObservableError<T>(message?: any, result?: T) {
+		return (error: HttpErrorResponse): Observable<T> => {
+			this.handleError(error, message);
+
+			// Let the app keep running by returning an empty result.
+			return of(result as T);
+		};
+	}
+
+	handleError(error: HttpErrorResponse, message?: any) {		
+		if (message instanceof Message) {
+			this.add(message);
+		} else if (!message) {
+			let errorMessage = new ErrorMessage({
+				errorInfo: error,
+				type: "error",
+				messageDisplay: "Error has occured"
+			});
+			this.add(errorMessage);
+		} else {
+			let errorMessage = new ErrorMessage({
+				errorInfo: error,
+				type: "error",
+				messageDisplay: message
+			});
+			this.add(errorMessage);
+		}		
 	}
 }
 

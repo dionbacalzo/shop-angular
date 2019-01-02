@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { ShopRestService } from "../shop-rest.service";
+import { AuthenticationService } from "../service/authentication.service";
 import { HttpClient } from "@angular/common/http";
 import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 
-import { MessageService, Message, ErrorMessage } from "../message.service";
+import { MessageService, Message, ErrorMessage } from "../service/message.service";
 
 @Component({
   templateUrl: "./login.component.html"
@@ -13,7 +13,7 @@ export class LoginComponent {
   credentials = { username: "", password: "", rememberMe: "" };
 
   constructor(
-    private rest: ShopRestService,
+    private authService: AuthenticationService,
     private http: HttpClient,
     private router: Router,
     private titleService: Title,
@@ -27,15 +27,13 @@ export class LoginComponent {
   }
 
   login() {
-    this.rest.authenticate(this.credentials, data => {
+    this.authService.authenticate(this.credentials, data => {
       if (data) {
-        this.messageService.clear();
-        if (data === "FAIL") {
-          this.messageService.add(
-            new ErrorMessage({
-              messageDisplay: "Username or Password is incorrect"
-            })
-          );
+        this.messageService.clear();        
+        if (data === "FAIL") {                    
+          this.messageService.add(new ErrorMessage({            
+            messageDisplay: "Username or Password is Invalid"
+          }));        
         } else {
           this.messageService.add(
             new Message({
@@ -50,11 +48,9 @@ export class LoginComponent {
     });
   }
 
-  redirect() {
-    this.rest.getAuthentication().subscribe(data => {
-      if (data === "true") {
+  redirect() {    
+      if (this.authService.authenticated == true) {
         this.router.navigateByUrl("/shop");
       }
-    });
   }
 }
