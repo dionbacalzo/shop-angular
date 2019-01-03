@@ -67,6 +67,22 @@ export class AuthenticationService implements HttpInterceptor {
 		);
 	}
 
+	setAuthentication(): Observable<any> {
+		this.authenticated = false;
+		return this.http
+			.get(endpoint + "isAuthenticated", { responseType: "text" })
+			.pipe(
+				tap(data => {
+					this.authenticated = data === "true";
+				}),
+				catchError(
+					this.messageService.handleObservableError(
+						"Unable to Authentication information. Try again later"
+					)
+				)
+			);
+	}
+
 	authenticate(credentials, callback) {
 		let loginParams = new HttpParams()
 			.set("username", credentials.username)

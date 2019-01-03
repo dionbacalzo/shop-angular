@@ -9,7 +9,7 @@ import { MessageService, Message, ErrorMessage } from "../service/message.servic
 @Component({
   templateUrl: "./login.component.html"
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   credentials = { username: "", password: "", rememberMe: "" };
 
   constructor(
@@ -48,9 +48,17 @@ export class LoginComponent {
     });
   }
 
-  redirect() {    
+  redirect() {
+    if (this.authService.authenticated == false) {
+      this.authService.setAuthentication().subscribe((data) => {
+        if (this.authService.authenticated == true) {
+          this.router.navigateByUrl("/shop");
+        }
+      });
+    } else {
       if (this.authService.authenticated == true) {
         this.router.navigateByUrl("/shop");
       }
+    }
   }
 }
