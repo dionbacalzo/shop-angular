@@ -5,12 +5,12 @@
 <div class="col-8">
   <div id="main-navbar" class="col-12">
     <ul>
-      <li><a routerLinkActive="active" routerLink="/shop/content">Home</a></li>
-      <li><a routerLinkActive="active" routerLink="/shop/update">Update</a></li>
+      <li><a routerLinkActive="active" routerLink="/shop/content">Home</a></li>      
       <div [hidden]="isAuthenticated">
-        <li><a routerLinkActive="active" routerLink="/shop/login">Login</a></li>
+        <li><a routerLinkActive="active" routerLink="/shop/signup">Signup</a></li>
       </div>
       <div [hidden]="!isAuthenticated">
+        <li><a routerLinkActive="active" routerLink="/shop/update">Update</a></li>
         <li><a (click)="logout()">Logout</a></li>
       </div>
     </ul>

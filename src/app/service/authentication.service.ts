@@ -19,6 +19,9 @@ const endpoint = "http://localhost:8080/shop/";
 const httpOptions = {
 	loginHeaders: new HttpHeaders({
 		"Content-Type": "application/x-www-form-urlencoded"
+	}),
+	signupHeaders: new HttpHeaders({
+		"Content-Type": "application/json"
 	})
 };
 @Injectable({
@@ -77,7 +80,7 @@ export class AuthenticationService implements HttpInterceptor {
 				}),
 				catchError(
 					this.messageService.handleObservableError(
-						"Unable to Authentication information. Try again later"
+						"Unable to Authenticate information. Try again later"
 					)
 				)
 			);
@@ -104,6 +107,26 @@ export class AuthenticationService implements HttpInterceptor {
 					this.messageService.handleError(
 						error,
 						"You are unable to login at this moment"
+					);
+				}
+			);
+	}
+
+	signup(credentials, callback) {
+		this.http
+			.post(endpoint + "signupUser", credentials, {
+				headers: httpOptions.signupHeaders,
+				responseType: "text"
+			})
+			.subscribe(
+				data => {
+					return callback && callback(data);
+				},
+				error => {
+					this.messageService.clear();
+					this.messageService.handleError(
+						error,
+						"You are unable to signup at this moment"
 					);
 				}
 			);

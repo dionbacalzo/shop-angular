@@ -29,11 +29,12 @@ import {
 	MatTableModule,
 	MatSortModule
 } from "@angular/material";
+import { SignupComponent } from './signup/signup.component';
 
 const appRoutes: Routes = [
 	{
-		path: "shop/login",
-		component: LoginComponent
+		path: "shop/signup",
+		component: SignupComponent
 	},
 	{
 		path: "shop/update",
@@ -61,7 +62,8 @@ const appRoutes: Routes = [
 		ShopComponent,
 		ShopFormComponent,
 		LoginComponent,
-		MessageComponent
+		MessageComponent,
+		SignupComponent
 	],
 	imports: [
 		RouterModule.forRoot(appRoutes),

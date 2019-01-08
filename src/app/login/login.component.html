@@ -3,19 +3,21 @@
   <div class="col-8">
     <h4>Login</h4>
     <form id="loginForm" role="form" (submit)="login()">
-      <div class="col-12" class="form-group">
-        <label class="col-2" for="username">Username:</label>
-        <input class="col-10" type="text" class="form-control" id="username" name="username" [(ngModel)]="credentials.username" required/>
+      <div class="form-group col-12">
+        <label class="col-4" for="username">Username:</label>
+        <input  type="text" class="form-control col-8" id="username" name="username" [(ngModel)]="credentials.username" required/>
       </div>
-      <div class="col-12" class="form-group">
-        <label class="col-2" for="password">Password:</label>
-        <input class="col-10" type="password" class="form-control" id="password" name="password" [(ngModel)]="credentials.password" required/>
+      <div class="form-group col-12">
+        <label class="col-4" for="password">Password:</label>
+        <input type="password" class="form-control col-8" id="password" name="password" [(ngModel)]="credentials.password" required/>
       </div>
-      <div class="col-12" class="form-group">
-        <label class="col-3" for="rememberMe">Remember Me:</label>
-        <input class="col-9" type="checkbox" class="form-control" id="rememberMe" name="rememberMe" [(ngModel)]="credentials.rememberMe" />
+      <div class="form-group col-12">
+        <label class="col-4" for="rememberMe">Remember Me:</label>
+        <input type="checkbox" class="form-control col-7" id="rememberMe" name="rememberMe" [(ngModel)]="credentials.rememberMe" />
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
     </form>
   </div>
   <div class="col-2">&nbsp;</div>

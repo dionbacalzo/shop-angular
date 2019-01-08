@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 
 import {
@@ -14,6 +14,7 @@ import { InventoryItem } from "../inventory-item";
 
 import { ShopRestService } from "../service/shop-rest.service";
 import { MessageService, Message } from "../service/message.service";
+import { AuthenticationService } from "../service/authentication.service";
 
 @Component({
 	selector: "app-shop-form",
@@ -25,21 +26,32 @@ export class ShopFormComponent implements OnInit {
 	saveResult: string = "";
 	productForm = this.formBuilder.group({
 		itemList: new FormArray([])
-	});	
+	});
 
 	constructor(
+		private authService: AuthenticationService,
 		private rest: ShopRestService,
-		private route: ActivatedRoute,
 		private router: Router,
 		private formBuilder: FormBuilder,
 		private titleService: Title,
-		private messageService: MessageService		
+		private messageService: MessageService
 	) {}
 
 	ngOnInit() {
 		this.titleService.setTitle("Shop Display: Form");
-		this.messageService.clear();		
+		this.redirect();
+		this.messageService.clear();
 		this.getContent();
+	}
+
+	redirect() {
+		if (this.authService.authenticated == false) {
+			this.authService.setAuthentication().subscribe(data => {
+				if (this.authService.authenticated == false) {
+					this.router.navigateByUrl("/shop");
+				}
+			});
+		}
 	}
 
 	createItem(): FormGroup {
@@ -50,9 +62,9 @@ export class ShopFormComponent implements OnInit {
 		this.itemList.insert(0, this.createItem());
 	}
 
-	deleteProduct(item: number): void {		
+	deleteProduct(item: number): void {
 		this.productForm.markAsTouched();
-		this.itemList.removeAt(item);		
+		this.itemList.removeAt(item);
 	}
 
 	resetProducts(): void {
@@ -68,8 +80,8 @@ export class ShopFormComponent implements OnInit {
 		return this.productForm.get("itemList") as FormArray;
 	}
 
-	getContent() {		
-		this.rest.getContent().subscribe((data: {itemList:[]}) => {
+	getContent() {
+		this.rest.getContent().subscribe((data: { itemList: [] }) => {
 			if (data) {
 				this.setItemForm(data);
 			} else {
@@ -78,15 +90,15 @@ export class ShopFormComponent implements OnInit {
 		});
 	}
 
-	onSubmit() {		
-		// TODO: Use EventEmitter with form value		
+	onSubmit() {
+		// TODO: Use EventEmitter with form value
 		let saveData = [];
-		this.productForm.value['itemList'].forEach(item =>{
-			saveData.push(new InventoryItem(item))
-		})		
-		
-		this.rest.saveContent(saveData).subscribe((data: {itemList:[]}) => {			
-			if(data){
+		this.productForm.value["itemList"].forEach(item => {
+			saveData.push(new InventoryItem(item));
+		});
+
+		this.rest.saveContent(saveData).subscribe((data: { itemList: [] }) => {
+			if (data) {
 				this.itemList.reset();
 				this.productForm = this.formBuilder.group({
 					itemList: new FormArray([])
@@ -102,11 +114,11 @@ export class ShopFormComponent implements OnInit {
 		});
 	}
 
-	setItemForm(data: {itemList:[]}){
+	setItemForm(data: { itemList: [] }) {
 		if (data && data.itemList && data.itemList.length) {
 			data.itemList.forEach(dataContent => {
 				let item = new InventoryItem(dataContent);
-				
+
 				let itemFormGroup = new FormGroup({
 					id: new FormControl(item.id),
 					title: new FormControl(item.title),

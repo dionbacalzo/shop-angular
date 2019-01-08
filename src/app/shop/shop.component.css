@@ -11,20 +11,17 @@
 #uploadFileSubmit {
 	margin-top: 10px;
 }
-#uploadResult {
-	margin: 10px 5px 10px 5px;
-	min-height: 20px;
-}
 
 #itemTableContainer {
+	margin-top: 25px;
 	min-height: 510px;
 }
-
 
 #uploadItemtitle {
 	text-align: center;
 	font-size: 1.2em;
-	background-color: #e8e8e8;
+	background-color: #21509C;
+	color: #ffffff;
 	padding: 10px 0px;
 }
 

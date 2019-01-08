@@ -7,7 +7,9 @@ import { Router } from "@angular/router";
 import { MessageService, Message, ErrorMessage } from "../service/message.service";
 
 @Component({
-  templateUrl: "./login.component.html"
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   credentials = { username: "", password: "", rememberMe: "" };
@@ -22,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle("Shop Display: Login");
-    this.redirect();
+    //this.redirect(); //no need to redirect now that login component is at homepage
     this.messageService.clear();
   }
 
@@ -39,7 +41,7 @@ export class LoginComponent implements OnInit {
             new Message({
               type: "info",
               messageDisplay: "Successfully logged in",
-              persist: 1
+              persist: 0
             })
           );
           this.router.navigateByUrl("/shop");

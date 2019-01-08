@@ -6,6 +6,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
 
 import { ShopRestService } from "../service/shop-rest.service";
 import { MessageService } from "../service/message.service";
+import { AuthenticationService } from '../service/authentication.service';
 import { InventoryItem } from "../inventory-item";
 
 
@@ -24,6 +25,7 @@ export class ShopComponent implements OnInit {
 	@ViewChild(MatSort) sort: MatSort;
 
 	constructor(
+		private authService: AuthenticationService,
 		private rest: ShopRestService,
 		private route: ActivatedRoute,
 		private router: Router,
@@ -37,6 +39,10 @@ export class ShopComponent implements OnInit {
 		this.messageService.clear();
 		this.getContent();
 	}
+
+	get isAuthenticated(): boolean{        
+      return this.authService.authenticated;
+    }
 
 	getContent() {
 		this.products = [];
