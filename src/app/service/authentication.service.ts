@@ -140,7 +140,7 @@ export class AuthenticationService implements HttpInterceptor {
 			.pipe(
 				tap(data => {
 					this.authenticated = false;
-					this.router.navigateByUrl("/shop/login");
+					this.router.navigateByUrl("/shop");
 				}),
 				catchError(
 					this.messageService.handleObservableError<{}>(
