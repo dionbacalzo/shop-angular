@@ -3,10 +3,8 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Title } from "@angular/platform-browser";
 import { HttpClient } from "@angular/common/http";
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
-
-import { ShopRestService } from "../service/shop-rest.service";
 import { MessageService } from "../service/message.service";
-import { AuthenticationService } from '../service/authentication.service';
+import { ShopRestService } from "../service/shop-rest.service";
 import { InventoryItem } from "../inventory-item";
 
 
@@ -17,6 +15,7 @@ import { InventoryItem } from "../inventory-item";
 })
 export class ShopComponent implements OnInit {
 	hideItemList: boolean = true;
+	errorItemList: boolean = false;
 	products: any[] =[];
 
 	displayedColumns: string[] = ['title', 'price', 'type', 'manufacturer', 'releaseDate'];
@@ -25,30 +24,24 @@ export class ShopComponent implements OnInit {
 	@ViewChild(MatSort) sort: MatSort;
 
 	constructor(
-		private authService: AuthenticationService,
 		private rest: ShopRestService,
 		private route: ActivatedRoute,
-		private router: Router,
-		private titleService: Title,
+		private router: Router,		
 		private http: HttpClient,
 		private messageService: MessageService
 	) { }
 
-	ngOnInit() {
-		this.titleService.setTitle("Shop Display: Home");
-		this.messageService.clear();
+	ngOnInit() {		
+		//this.messageService.clear();
 		this.getContent();
 	}
-
-	get isAuthenticated(): boolean{        
-      return this.authService.authenticated;
-    }
 
 	getContent() {
 		this.products = [];
 		this.rest.getContent().subscribe((data: {itemList:[]}) => {			
 			if (!data) {
 				this.hideItemList = true;
+				this.errorItemList = true;				
 			} else if (!data["itemList"]) {
 				let message = {
 					error: "Error",

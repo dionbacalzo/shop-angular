@@ -1,23 +1,9 @@
-.title {
-	text-align: center;
-	font-weight: 600;
-	background-color: #2A6EA8;
-    color: #ffffff;
-    padding: 10px;
-    border-radius: 6px;
-    margin: 15px 0;
-}
-
-#uploadFileSubmit {
-	margin-top: 10px;
-}
-
 #itemTableContainer {
 	margin-top: 25px;
 	min-height: 510px;
 }
 
-#uploadItemtitle {
+#itemTableTitle {
 	text-align: center;
 	font-size: 1.2em;
 	background-color: #21509C;
@@ -25,40 +11,34 @@
 	padding: 10px 0px;
 }
 
-#uploadItemTable {
+#itemTable {
 	text-align: center;
 }
 
-#uploadItemTable th {
+#itemTable th {
     text-align: left;
     color: #104A93;
     background-color: #9BDAF7;
     padding: 10px 5px;
 }
 
-#uploadItemTable td {
+#itemTable td {
 	height: 35px;
 	padding: 10px;
 	background-color: #ffffff;
 	border: 1px solid #104A93;
 }
 
-.hidden {
-	display: none;
+.spinner-container {
+   height: 15em;
+   position: relative 
 }
 
-#loader {
-	position: absolute;
-	width: 50%;
-	height: 50%;
-    display: none;
-	background: url("/assets/images/ajax-load-circle.gif") no-repeat center;
-	text-align: center;
-}
-
-.deleteButton {
-	background: url("/assets/images/remove.png") no-repeat;
-	height: 16px;
-	width: 16px;
-	border: none;
+.center {
+	margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
 }

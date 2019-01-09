@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AuthenticationService } from "../service/authentication.service";
 import { HttpClient } from "@angular/common/http";
-import { Title } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 
 import { MessageService, Message, ErrorMessage } from "../service/message.service";
@@ -18,14 +17,13 @@ export class LoginComponent implements OnInit {
     private authService: AuthenticationService,
     private http: HttpClient,
     private router: Router,
-    private titleService: Title,
     private messageService: MessageService
   ) {}
 
   ngOnInit() {
-    this.titleService.setTitle("Shop Display: Login");
-    //this.redirect(); //no need to redirect now that login component is at homepage
-    this.messageService.clear();
+    //no need to redirect now that login component is at homepage
+    //this.redirect(); 
+    //this.messageService.clear();
   }
 
   login() {

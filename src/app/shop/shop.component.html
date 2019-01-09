@@ -1,15 +1,7 @@
-<div class="col-12">
-  <div class="col-6">
-    <app-login [hidden]="isAuthenticated"></app-login>
-  </div>
-  <div class="col-6">
-    
-  </div>
-</div>
 <div id="itemTableContainer" class="col-12" [hidden]="hideItemList">
   <div class="col-12">
     <div class="col-4">&nbsp;</div>
-    <div id="uploadItemtitle" class="col-4">Item List</div>
+    <div id="itemTableTitle" class="col-4">Item List</div>
     <div class="col-4">&nbsp;</div>
   </div>
   <mat-form-field>
@@ -20,7 +12,7 @@
     mat-table
     [dataSource]="dataSource"
     matSort
-    id="uploadItemTable"
+    id="itemTable"
     class="col-12"
   >
     <ng-container matColumnDef="title">
@@ -54,4 +46,7 @@
       showFirstLastButtons
     ></mat-paginator>
   </div>
+</div>
+<div class="col-12 spinner-container" [hidden]="!hideItemList || errorItemList">
+    <mat-spinner class="center"></mat-spinner>
 </div>

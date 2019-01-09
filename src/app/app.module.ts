@@ -1,21 +1,9 @@
 import { BrowserModule, Title } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
-
 import { RouterModule, Routes } from "@angular/router";
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
-
-import { AppComponent } from "./app.component";
-import { ShopComponent } from "./shop/shop.component";
-import { ShopFormComponent } from "./shop-form/shop-form.component";
-import { LoginComponent } from "./login/login.component";
-
-import { ShopRestService } from "./service/shop-rest.service";
-import { MessageService } from "./service/message.service";
-import { AuthenticationService } from "./service/authentication.service";
-
-import { MessageComponent } from "./message/message.component";
 
 //material
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -27,9 +15,22 @@ import {
 	MatSelectModule,
 	MatPaginatorModule,
 	MatTableModule,
-	MatSortModule
+	MatSortModule,
+	MatProgressSpinnerModule
 } from "@angular/material";
+
+import { AppComponent } from "./app.component";
+import { ShopComponent } from "./shop/shop.component";
+import { ShopFormComponent } from "./shop-form/shop-form.component";
+import { LoginComponent } from "./login/login.component";
+
+import { ShopRestService } from "./service/shop-rest.service";
+import { MessageService } from "./service/message.service";
+import { AuthenticationService } from "./service/authentication.service";
+
+import { MessageComponent } from "./message/message.component";
 import { SignupComponent } from './signup/signup.component';
+import { HomepageComponent } from './homepage/homepage.component';
 
 const appRoutes: Routes = [
 	{
@@ -42,7 +43,7 @@ const appRoutes: Routes = [
 	},
 	{
 		path: "shop/content",
-		component: ShopComponent
+		component: HomepageComponent
 	},
 	{
 		path: "shop",
@@ -63,7 +64,8 @@ const appRoutes: Routes = [
 		ShopFormComponent,
 		LoginComponent,
 		MessageComponent,
-		SignupComponent
+		SignupComponent,
+		HomepageComponent
 	],
 	imports: [
 		RouterModule.forRoot(appRoutes),
@@ -79,7 +81,8 @@ const appRoutes: Routes = [
 		MatSelectModule,
 		MatPaginatorModule,
 		MatTableModule,
-		MatSortModule
+		MatSortModule,
+		MatProgressSpinnerModule
 	],
 	providers: [
 		{
