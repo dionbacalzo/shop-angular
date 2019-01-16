@@ -13,14 +13,9 @@ import { Observable, of, empty } from "rxjs";
 import { Router } from "@angular/router";
 import { map, catchError, tap, finalize } from "rxjs/operators";
 
-import { MessageService, ErrorMessage } from "./message.service";
+import { MessageService } from "./message.service";
 
 const endpoint = "http://localhost:8080/shop/";
-const httpOptions = {
-	loginHeaders: new HttpHeaders({
-		"Content-Type": "application/x-www-form-urlencoded"
-	})
-};
 @Injectable({
 	providedIn: "root"
 })
