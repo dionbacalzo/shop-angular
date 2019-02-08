@@ -36,17 +36,17 @@ export class SignupComponent implements OnInit {
 		this.authService.signup(this.credentials, data => {
 			if (data) {
 				this.messageService.clear();
-				if (data === 'FAIL') {
+				if (data.status === 'FAIL') {
 					this.messageService.add(
 						new ErrorMessage({
-							messageDisplay: 'Signup Failed'
+							messageDisplay: data.message
 						})
 					);
 				} else {
 					this.messageService.add(
 						new Message({
 							type: 'info',
-							messageDisplay: 'Successfully signed up'
+							messageDisplay: data.message
 						})
 					);
 				}

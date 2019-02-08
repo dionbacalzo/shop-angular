@@ -42,15 +42,15 @@ export class LoginComponent implements OnInit {
 		this.authService.authenticate(this.credentials, data => {
 			if (data) {
 				this.messageService.clear();
-				if (data === 'FAIL') {
+				if (data.status === 'FAIL') {
 					this.messageService.add(new ErrorMessage({
-						messageDisplay: 'Username or Password is Invalid'
+						messageDisplay: data.message
 					}));
 				} else {
 					this.messageService.add(
 						new Message({
 							type: 'info',
-							messageDisplay: 'Successfully logged in',
+							messageDisplay: data.message,
 							persist: 0
 						})
 					);

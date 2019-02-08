@@ -11,7 +11,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 
 import { MessageService, ErrorMessage } from './message.service';
 
@@ -94,11 +94,12 @@ export class AuthenticationService implements HttpInterceptor {
 		this.http
 			.post(endpoint + 'loginUser', loginParams, {
 				headers: httpOptions.loginHeaders,
-				responseType: 'text'
+				// responseType: 'text'
 			})
+			.pipe( map(this.extractData) )
 			.subscribe(
 				data => {
-					if (data && data === 'SUCCESS') {
+					if (data && data['status'] === 'SUCCESS') {
 						this.authenticated = true;
 					} else {
 						this.authenticated = false;
@@ -120,8 +121,9 @@ export class AuthenticationService implements HttpInterceptor {
 		this.http
 			.post(endpoint + 'signupUser', credentials, {
 				headers: httpOptions.signupHeaders,
-				responseType: 'text'
+				// responseType: 'text'
 			})
+			.pipe( map(this.extractData) )
 			.subscribe(
 				data => {
 					return callback && callback(data);
@@ -152,5 +154,10 @@ export class AuthenticationService implements HttpInterceptor {
 					)
 				)
 			);
+	}
+
+	private extractData(res: Response) {
+		const body = res;
+		return body || {};
 	}
 }
