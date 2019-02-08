@@ -1,29 +1,27 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { Router } from "@angular/router";
-import { Title } from "@angular/platform-browser";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 import {
 	FormBuilder,
 	FormControl,
 	FormGroup,
-	FormArray,
-	Validators
-} from "@angular/forms";
+	FormArray} from '@angular/forms';
 
-import { InventoryItem } from "../inventory-item";
+import { InventoryItem } from '../inventory-item';
 
-import { ShopRestService } from "../service/shop-rest.service";
-import { MessageService, Message } from "../service/message.service";
-import { AuthenticationService } from "../service/authentication.service";
+import { ShopRestService } from '../service/shop-rest.service';
+import { MessageService, Message } from '../service/message.service';
+import { AuthenticationService } from '../service/authentication.service';
 
 @Component({
-	selector: "app-shop-form",
-	templateUrl: "./shop-form.component.html",
-	styleUrls: ["./shop-form.component.css"]
+	selector: 'app-shop-form',
+	templateUrl: './shop-form.component.html',
+	styleUrls: ['./shop-form.component.css']
 })
 export class ShopFormComponent implements OnInit {
-	hideItemList: boolean = true;
-	saveResult: string = "";
+	hideItemList = true;
+	saveResult = '';
 	productForm = this.formBuilder.group({
 		itemList: new FormArray([])
 	});
@@ -35,20 +33,20 @@ export class ShopFormComponent implements OnInit {
 		private formBuilder: FormBuilder,
 		private titleService: Title,
 		private messageService: MessageService
-	) {}
+	) { }
 
 	ngOnInit() {
-		this.titleService.setTitle("Shop Display: Form");
+		this.titleService.setTitle('Shop Display: Form');
 		this.redirect();
 		this.messageService.clear();
 		this.getContent();
 	}
 
 	redirect() {
-		if (this.authService.authenticated == false) {
+		if (this.authService.authenticated === false) {
 			this.authService.setAuthentication().subscribe(data => {
-				if (this.authService.authenticated == false) {
-					this.router.navigateByUrl("/shop");
+				if (this.authService.authenticated === false) {
+					this.router.navigateByUrl('/shop');
 				}
 			});
 		}
@@ -77,7 +75,7 @@ export class ShopFormComponent implements OnInit {
 	}
 
 	get itemList() {
-		return this.productForm.get("itemList") as FormArray;
+		return this.productForm.get('itemList') as FormArray;
 	}
 
 	getContent() {
@@ -92,8 +90,8 @@ export class ShopFormComponent implements OnInit {
 
 	onSubmit() {
 		// TODO: Use EventEmitter with form value
-		let saveData = [];
-		this.productForm.value["itemList"].forEach(item => {
+		const saveData = [];
+		this.productForm.value['itemList'].forEach(item => {
 			saveData.push(new InventoryItem(item));
 		});
 
@@ -105,9 +103,9 @@ export class ShopFormComponent implements OnInit {
 				});
 
 				this.setItemForm(data);
-				let message = new Message({
-					type: "info",
-					messageDisplay: "Successfully Saved Items"
+				const message = new Message({
+					type: 'info',
+					messageDisplay: 'Successfully Saved Items'
 				});
 				this.messageService.add(message);
 			}
@@ -117,9 +115,9 @@ export class ShopFormComponent implements OnInit {
 	setItemForm(data: { itemList: [] }) {
 		if (data && data.itemList && data.itemList.length) {
 			data.itemList.forEach(dataContent => {
-				let item = new InventoryItem(dataContent);
+				const item = new InventoryItem(dataContent);
 
-				let itemFormGroup = new FormGroup({
+				const itemFormGroup = new FormGroup({
 					id: new FormControl(item.id),
 					title: new FormControl(item.title),
 					manufacturer: new FormControl(item.manufacturer),
@@ -132,9 +130,9 @@ export class ShopFormComponent implements OnInit {
 			});
 			this.hideItemList = false;
 		} else {
-			let message = new Message({
-				type: "warn",
-				messageDisplay: "No Items found"
+			const message = new Message({
+				type: 'warn',
+				messageDisplay: 'No Items found'
 			});
 			this.messageService.add(message);
 			this.hideItemList = true;

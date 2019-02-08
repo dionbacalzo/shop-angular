@@ -1,64 +1,76 @@
-import { Component, OnInit } from "@angular/core";
-import { AuthenticationService } from "../service/authentication.service";
-import { HttpClient } from "@angular/common/http";
-import { Router } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from '../service/authentication.service';
+import { Router } from '@angular/router';
 
-import { MessageService, Message, ErrorMessage } from "../service/message.service";
+import { MessageService, Message, ErrorMessage } from '../service/message.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  credentials = { username: "", password: "", rememberMe: "" };
+	credentials = { username: '', password: '', rememberMe: '' };
+	loginForm: FormGroup;
 
-  constructor(
-    private authService: AuthenticationService,
-    private http: HttpClient,
-    private router: Router,
-    private messageService: MessageService
-  ) {}
+	constructor(
+		private authService: AuthenticationService,
+		private router: Router,
+		private messageService: MessageService
+	) { }
 
-  ngOnInit() {
-    //no need to redirect now that login component is at homepage
-    //this.redirect(); 
-    //this.messageService.clear();
-  }
+	ngOnInit() {
+		this.loginForm = new FormGroup({
+			'username': new FormControl(this.credentials.username, Validators.required),
+			'password': new FormControl(this.credentials.password, Validators.required),
+			'rememberMe': new FormControl(this.credentials.rememberMe),
+		});
+		// no need to redirect now that login component is at homepage
+		// this.redirect();
+		// this.messageService.clear();
+	}
 
-  login() {
-    this.authService.authenticate(this.credentials, data => {
-      if (data) {
-        this.messageService.clear();        
-        if (data === "FAIL") {                    
-          this.messageService.add(new ErrorMessage({            
-            messageDisplay: "Username or Password is Invalid"
-          }));        
-        } else {
-          this.messageService.add(
-            new Message({
-              type: "info",
-              messageDisplay: "Successfully logged in",
-              persist: 0
-            })
-          );
-          this.router.navigateByUrl("/shop");
-        }
-      }
-    });
-  }
+	get username() { return this.loginForm.get('username'); }
 
-  redirect() {
-    if (this.authService.authenticated == false) {
-      this.authService.setAuthentication().subscribe((data) => {
-        if (this.authService.authenticated == true) {
-          this.router.navigateByUrl("/shop");
-        }
-      });
-    } else {
-      if (this.authService.authenticated == true) {
-        this.router.navigateByUrl("/shop");
-      }
-    }
-  }
+	get password() { return this.loginForm.get('password'); }
+
+	get rememberMe() { return this.loginForm.get('rememberMe'); }
+
+	login() {
+		this.credentials = this.loginForm.value;
+		this.authService.authenticate(this.credentials, data => {
+			if (data) {
+				this.messageService.clear();
+				if (data === 'FAIL') {
+					this.messageService.add(new ErrorMessage({
+						messageDisplay: 'Username or Password is Invalid'
+					}));
+				} else {
+					this.messageService.add(
+						new Message({
+							type: 'info',
+							messageDisplay: 'Successfully logged in',
+							persist: 0
+						})
+					);
+					this.router.navigateByUrl('/shop');
+				}
+			}
+		});
+	}
+
+	redirect() {
+		if (this.authService.authenticated === false) {
+			this.authService.setAuthentication().subscribe(() => {
+				if (this.authService.authenticated === true) {
+					this.router.navigateByUrl('/shop');
+				}
+			});
+		} else {
+			if (this.authService.authenticated === true) {
+				this.router.navigateByUrl('/shop');
+			}
+		}
+	}
 }

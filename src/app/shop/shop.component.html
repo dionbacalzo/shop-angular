@@ -47,6 +47,12 @@
     ></mat-paginator>
   </div>
 </div>
-<div class="col-12 spinner-container" [hidden]="!hideItemList || errorItemList">
+<div class="col-12 spinner-container" [hidden]="!hideItemList || errorItemList || emptyItemList">
     <mat-spinner class="center"></mat-spinner>
+</div>
+
+<div class="col-12" [hidden]="!emptyItemList">
+	<div class="col-2">&nbsp;</div>
+	<div class="col-8 noItem-container">No Items Found</div>
+	<div class="col-2">&nbsp;</div>
 </div>
