@@ -98,7 +98,11 @@ export class AuthenticationService implements HttpInterceptor {
 			})
 			.subscribe(
 				data => {
-					this.authenticated = true;
+					if (data && data === 'SUCCESS') {
+						this.authenticated = true;
+					} else {
+						this.authenticated = false;
+					}
 					return callback && callback(data);
 				},
 				error => {
