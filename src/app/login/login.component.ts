@@ -13,6 +13,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class LoginComponent implements OnInit {
 	credentials = { username: '', password: '', rememberMe: '' };
 	loginForm: FormGroup;
+	hideLoginForm: boolean;
 
 	constructor(
 		private authService: AuthenticationService,
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
 			'password': new FormControl(this.credentials.password, Validators.required),
 			'rememberMe': new FormControl(this.credentials.rememberMe),
 		});
+		this.hideLoginForm = false;
 		// no need to redirect now that login component is at homepage
 		// this.redirect();
 		// this.messageService.clear();
@@ -38,6 +40,7 @@ export class LoginComponent implements OnInit {
 	get rememberMe() { return this.loginForm.get('rememberMe'); }
 
 	login() {
+		this.hideLoginForm = true;
 		this.credentials = this.loginForm.value;
 		this.authService.authenticate(this.credentials, data => {
 			if (data) {
@@ -56,6 +59,7 @@ export class LoginComponent implements OnInit {
 					);
 					this.router.navigateByUrl('/shop');
 				}
+				this.hideLoginForm = false;
 			}
 		});
 	}
