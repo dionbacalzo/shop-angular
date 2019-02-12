@@ -29,6 +29,7 @@ const httpOptions = {
 })
 export class AuthenticationService implements HttpInterceptor {
 	authenticated = false;
+	user: any = {username: '', role: '' };
 
 	constructor(
 		private http: HttpClient,
@@ -70,13 +71,17 @@ export class AuthenticationService implements HttpInterceptor {
 		);
 	}
 
-	setAuthentication(): Observable<any> {
-		this.authenticated = false;
+	getUser(): Observable<any> {
 		return this.http
-			.get(endpoint + 'isAuthenticated', { responseType: 'text' })
+			.get(endpoint + 'retrieveUser')
 			.pipe(
 				tap(data => {
-					this.authenticated = data === 'true';
+					if (data && data !== '') {
+						this.authenticated = true;
+						this.user = data;
+					} else {
+						this.authenticated = false;
+					}
 				}),
 				catchError(
 					this.messageService.handleObservableError(
@@ -101,6 +106,9 @@ export class AuthenticationService implements HttpInterceptor {
 				data => {
 					if (data && data['status'] === 'SUCCESS') {
 						this.authenticated = true;
+						if (data['details']) {
+							this.user = data['details'];
+						}
 					} else {
 						this.authenticated = false;
 					}

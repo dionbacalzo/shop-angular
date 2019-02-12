@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
 
 	redirect() {
 		if (this.authService.authenticated === false) {
-			this.authService.setAuthentication().subscribe(() => {
+			this.authService.getUser().subscribe(() => {
 				if (this.authService.authenticated === true) {
 					this.router.navigateByUrl('/shop');
 				}

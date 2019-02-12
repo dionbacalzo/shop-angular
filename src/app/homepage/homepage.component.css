@@ -1,0 +1,8 @@
+.welcome-user {
+	min-height: 260px;
+	display: flex;
+    justify-content:center;
+    align-content:center;
+	flex-direction:column;
+	text-align: center;
+}

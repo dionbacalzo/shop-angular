@@ -44,7 +44,7 @@ export class ShopFormComponent implements OnInit {
 
 	redirect() {
 		if (this.authService.authenticated === false) {
-			this.authService.setAuthentication().subscribe(data => {
+			this.authService.getUser().subscribe(data => {
 				if (this.authService.authenticated === false) {
 					this.router.navigateByUrl('/shop');
 				}

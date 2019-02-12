@@ -1,6 +1,15 @@
 <div class="col-12">
   <div class="col-6">
-    <app-login [hidden]="isAuthenticated"></app-login>
+	<app-login [hidden]="isAuthenticated"></app-login>
+	<div [hidden]="!isAuthenticated" [ngClass]="isAuthenticated ? 'welcome-user' : ''">
+		<div>
+			Hello {{user.username}}
+		</div>
+		<br>
+		<div>
+			Welcome to your Homepage
+		</div>
+	</div>
   </div>
   <div class="col-6">
 	    

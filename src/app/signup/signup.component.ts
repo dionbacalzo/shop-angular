@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../service/authentication.service';
-import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
@@ -20,7 +19,6 @@ export class SignupComponent implements OnInit {
 
 	constructor(
 		private authService: AuthenticationService,
-		private http: HttpClient,
 		private router: Router,
 		private titleService: Title,
 		private messageService: MessageService
@@ -56,7 +54,7 @@ export class SignupComponent implements OnInit {
 
 	redirect() {
 		if (this.authService.authenticated === false) {
-			this.authService.setAuthentication().subscribe(data => {
+			this.authService.getUser().subscribe(data => {
 				if (this.authService.authenticated === true) {
 					this.router.navigateByUrl('/shop');
 				}

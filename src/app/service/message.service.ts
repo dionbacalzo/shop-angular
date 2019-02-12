@@ -1,10 +1,10 @@
-import { Injectable } from "@angular/core";
-import { Subject } from "rxjs";
-import { HttpErrorResponse, HttpEvent } from "@angular/common/http";
-import { Observable, of } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { HttpErrorResponse, HttpEvent } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
-	providedIn: "root"
+	providedIn: 'root'
 })
 export class MessageService {
 	messageSubject: Subject<any> = new Subject<any>();
@@ -24,7 +24,7 @@ export class MessageService {
 			let index: number = this.messages.length - 1;
 			while (index >= 0) {
 				let currentPersistTime = this.messages[index].getPersist();
-				if (this.messages[index].getPersist() == 0) {
+				if (this.messages[index].getPersist() === 0) {
 					this.messages.splice(index, 1);
 				} else if (currentPersistTime > 0) {
 					currentPersistTime -= 1;
@@ -48,24 +48,24 @@ export class MessageService {
 		};
 	}
 
-	handleError(error: HttpErrorResponse, message?: any) {		
+	handleError(error: HttpErrorResponse, message?: any) {
 		if (message instanceof Message) {
 			this.add(message);
 		} else if (!message) {
-			let errorMessage = new ErrorMessage({
+			const errorMessage = new ErrorMessage({
 				errorInfo: error,
-				type: "error",
-				messageDisplay: "Error has occured"
+				type: 'error',
+				messageDisplay: 'Error has occured'
 			});
 			this.add(errorMessage);
 		} else {
-			let errorMessage = new ErrorMessage({
+			const errorMessage = new ErrorMessage({
 				errorInfo: error,
-				type: "error",
+				type: 'error',
 				messageDisplay: message
 			});
 			this.add(errorMessage);
-		}		
+		}
 	}
 }
 
@@ -82,7 +82,7 @@ export class Message<T> {
 			type: string;
 			messageDisplay: string;
 			persist?: number;
-		} = { type: "", messageDisplay: "" }
+		} = { type: '', messageDisplay: '' }
 	) {
 		this.type = options.type;
 		this.messageDisplay = options.messageDisplay;
@@ -130,14 +130,14 @@ export class ErrorMessage<T> extends Message<T> {
 			type?: string;
 			messageDisplay: string;
 			persist?: number;
-		} = { messageDisplay: "" }
+		} = { messageDisplay: '' }
 	) {
 		if (!options.type) {
-			options.type = "error";
+			options.type = 'error';
 		}
-		let errorMessage = {
+		const errorMessage = {
 			errorInfo: options.errorInfo,
-			type: "error",
+			type: 'error',
 			messageDisplay: options.messageDisplay,
 			persist: options.persist
 		};
