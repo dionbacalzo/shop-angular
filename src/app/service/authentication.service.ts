@@ -29,7 +29,8 @@ const httpOptions = {
 })
 export class AuthenticationService implements HttpInterceptor {
 	authenticated = false;
-	user: any = {username: '', role: '' };
+	// TODO: change to initialization once backend user object finalizes
+	user: any = {username: '', role: '', 'authorities': [ {'authority': ''} ] };
 
 	constructor(
 		private http: HttpClient,
@@ -76,7 +77,7 @@ export class AuthenticationService implements HttpInterceptor {
 			.get(endpoint + 'retrieveUser')
 			.pipe(
 				tap(data => {
-					if (data && data !== '') {
+					if (data) {
 						this.authenticated = true;
 						this.user = data;
 					} else {
