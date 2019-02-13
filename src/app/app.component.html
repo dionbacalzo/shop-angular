@@ -11,7 +11,7 @@
       </div>
       <div [hidden]="!isAuthenticated">
         <li><a routerLinkActive="active" routerLink="/shop/update">Update</a></li>
-        <li><a (click)="logout()">Logout</a></li>
+        <div class="logout"><a (click)="logout()">Logout</a></div>
       </div>
     </ul>
   </div>
