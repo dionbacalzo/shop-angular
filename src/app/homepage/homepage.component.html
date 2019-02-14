@@ -3,14 +3,14 @@
 	<app-login [hidden]="isAuthenticated"></app-login>
 	<div [hidden]="!isAuthenticated" [ngClass]="isAuthenticated ? 'welcome-user' : ''">
 		<div>
-			Hello {{user.username}}
+			Hello {{user.firstname}} {{user.lastname}}
 		</div>
 		<div>
 			Welcome to your Homepage
 		</div>
 		<br>
 		<div>
-			Your role is {{user.authorities[0].authority}}
+			Your role is {{user.role}}
 		</div>
 	</div>
   </div>

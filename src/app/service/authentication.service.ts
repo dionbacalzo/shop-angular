@@ -29,8 +29,7 @@ const httpOptions = {
 })
 export class AuthenticationService implements HttpInterceptor {
 	authenticated = false;
-	// TODO: change to initialization once backend user object finalizes
-	user: any = {username: '', role: '', 'authorities': [ {'authority': ''} ] };
+	user: any = {username: '', firstname: '', lastname: '',  role: ''};
 
 	constructor(
 		private http: HttpClient,
