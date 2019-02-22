@@ -31,6 +31,7 @@ import { AuthenticationService } from './service/authentication.service';
 import { MessageComponent } from './message/message.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomepageComponent } from './homepage/homepage.component';
+import { CarouselComponent, CarouselItem } from './carousel/carousel.component';
 
 const appRoutes: Routes = [
 	{
@@ -65,7 +66,9 @@ const appRoutes: Routes = [
 		LoginComponent,
 		MessageComponent,
 		SignupComponent,
-		HomepageComponent
+		HomepageComponent,
+		CarouselComponent,
+		CarouselItem
 	],
 	imports: [
 		RouterModule.forRoot(appRoutes),

@@ -10,12 +10,11 @@ import { AuthenticationService } from '../service/authentication.service';
 })
 export class HomepageComponent implements OnInit {
 
-
 	constructor(
 		private authService: AuthenticationService,
 		private titleService: Title,
 		private messageService: MessageService
-	) {}
+	) { }
 
 	ngOnInit() {
 		this.titleService.setTitle('Shop Display: Home');
