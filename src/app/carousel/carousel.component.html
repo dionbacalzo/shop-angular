@@ -1,5 +1,5 @@
-<section class="carousel-wrapper" [style.width.px]="width" [style.height.px]="height">
-	<ul class="carousel-inner" [style.width.px]="width" [style.height.px]="height" #carousel>
+<section class="carousel-wrapper" [ngStyle]="calculateSize(width, height)" (window:resize)="onResize($event)">
+	<ul class="carousel-inner" [ngStyle]="calculateSize(width, height)" #carousel>
 		<ng-content></ng-content>
 	</ul>
 	<ol class="carousel-indicators">

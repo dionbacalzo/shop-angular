@@ -1,4 +1,4 @@
-import { Component, ContentChildren, QueryList, AfterContentInit, Input, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { Component, ContentChildren, QueryList, Input, ViewChild, ElementRef, ChangeDetectorRef, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/core';
 import { style, animate, AnimationPlayer, AnimationBuilder, AnimationFactory } from '@angular/animations';
 
 
@@ -33,11 +33,11 @@ export class CarouselItem implements AfterViewChecked {
 	templateUrl: './carousel.component.html',
 	styleUrls: ['./carousel.component.css']
 })
-export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CarouselComponent implements AfterViewInit, OnDestroy {
 
 	@ContentChildren(CarouselItem) items: QueryList<CarouselItem>;
-	@Input() width = undefined;
-	@Input() height = undefined;
+	@Input() width: String = undefined;
+	@Input() height: String = undefined;
 	@Input() automatic: number = undefined;
 	@ViewChild('carousel') private carousel: ElementRef;
 
@@ -49,30 +49,57 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 	constructor(private builder: AnimationBuilder) {
 	}
 
+	/**
+	 * Calculate the input width and height to reflect the carousel style 
+	 * @param width 
+	 * @param height 
+	 */
+	calculateSize(width, height) {
+		let style = {};
+		let units = ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "rem", "vw", "vh", "vmin", "vmax", "%"];
+		if (width) {
+			width = width.toString();
+			let widthUnit = width.replace(/\d/g, '');
+			let widthValue = width.replace(/\D/g, '');
+
+			if (units.indexOf(widthUnit) > -1) {
+				style['width.'+widthUnit] = widthValue;
+			} else {
+				style['width.%'] = '100';
+			}
+		} else {
+			style['width.%'] = '100';
+		}
+		if (height) {
+			height = height.toString();
+			let heightUnit = height.replace(/\d/g, '');
+			let heightValue = height.replace(/\D/g, '');
+
+			if (units.indexOf(heightUnit) > -1) {
+				style['height.'+heightUnit] = heightValue;
+			} else {
+				style['height.%'] = '100';
+			}
+		} else {
+			style['height.%'] = '100';
+		}
+		return style;
+	}
+
 	ngAfterViewInit() {
 		// updates the width and height of the carousel items
 		this.items.forEach((child) => {
-			let element: ElementRef = child['elem']
-			if (this.width != child.width) {
+			if (this.carousel.nativeElement.offsetWidth != child.width) {
 				child.setWidth(this.carousel.nativeElement.offsetWidth);
 				child.ngAfterViewChecked();
 			}
-			if (this.height != child.height) {
+			if (this.carousel.nativeElement.offsetHeight != child.height) {
 				child.setHeight(this.carousel.nativeElement.offsetHeight);
 				child.ngAfterViewChecked();
 			}
 		});
 		if (this.automatic !== undefined && !isNaN(Number(this.automatic))) {
 			this.enableAutomatic(this.automatic);
-		}
-	}
-
-	ngOnInit(): void {
-		if (this.width === undefined || isNaN(Number(this.width))) {
-			this.width = this.carousel.nativeElement.offsetWidth;
-		}
-		if (this.height === undefined || isNaN(Number(this.height))) {
-			this.height = this.carousel.nativeElement.offsetHeight;
 		}
 	}
 
@@ -91,7 +118,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 	next() {
 		if (this.currentSlide + 1 === this.items.length) return;
 		this.currentSlide = (this.currentSlide + 1) % this.items.length;
-		const offset = this.currentSlide * this.width;
+		const offset = this.currentSlide * this.carousel.nativeElement.offsetWidth;
 		const myAnimation: AnimationFactory = this.buildAnimation(offset);
 		this.player = myAnimation.create(this.carousel.nativeElement);
 		this.player.play();
@@ -101,7 +128,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 		if (this.currentSlide === 0) return;
 
 		this.currentSlide = ((this.currentSlide - 1) + this.items.length) % this.items.length;
-		const offset = this.currentSlide * this.width;
+		const offset = this.currentSlide * this.carousel.nativeElement.offsetWidth;
 
 		const myAnimation: AnimationFactory = this.buildAnimation(offset);
 		this.player = myAnimation.create(this.carousel.nativeElement);
@@ -115,7 +142,7 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 	moveToSlide(i: number) {
 		if (this.currentSlide !== i) {
 			this.currentSlide = i;
-			const offset = this.currentSlide * this.width;
+			const offset = this.currentSlide * this.carousel.nativeElement.offsetWidth;
 			const myAnimation: AnimationFactory = this.buildAnimation(offset);
 			this.player = myAnimation.create(this.carousel.nativeElement);
 			this.player.play();
@@ -130,6 +157,24 @@ export class CarouselComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.interval = setInterval(() => {
 			this.moveToSlide((this.currentSlide + 1) % this.items.length)
 		}, seconds * 1000);
+	}
+
+	/**
+	 * Responsive Design
+	 * @param event 
+	 */
+	onResize() {
+		this.items.forEach((child) => {
+			if (this.carousel.nativeElement.offsetWidth != child.width) {
+				child.setWidth(this.carousel.nativeElement.offsetWidth);
+				child.ngAfterViewChecked();
+			}
+			if (this.carousel.nativeElement.offsetHeight != child.height) {
+				child.setHeight(this.carousel.nativeElement.offsetHeight);
+				child.ngAfterViewChecked();
+			}
+		});
+		this.moveToSlide(0);
 	}
 
 }
