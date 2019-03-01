@@ -20,21 +20,23 @@ import {
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
-import { ShopComponent } from './shop/shop.component';
-import { ShopFormComponent } from './shop-form/shop-form.component';
-import { LoginComponent } from './login/login.component';
+import { ShopComponent } from './feature/shop/shop.component';
+import { ShopFormComponent } from './feature/shop-form/shop-form.component';
+import { LoginComponent } from './feature/login/login.component';
+import { MessageComponent } from './feature/message/message.component';
+import { SignupComponent } from './feature/signup/signup.component';
+import { AccountResetComponent } from './feature/account-reset/account-reset.component';
+import { CarouselComponent, CarouselItem } from './feature/carousel/carousel.component';
 
 import { ShopRestService } from './service/shop-rest.service';
 import { MessageService } from './service/message.service';
 import { AuthenticationService } from './service/authentication.service';
 import { AdminService } from './service/admin.service';
 
-import { MessageComponent } from './message/message.component';
-import { SignupComponent } from './signup/signup.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { CarouselComponent, CarouselItem } from './carousel/carousel.component';
-import { AdminpageComponent } from './adminpage/adminpage.component';
-import { AccountResetComponent } from './account-reset/account-reset.component';
+import { HomepageComponent } from './page/homepage/homepage.component';
+import { AdminpageComponent } from './page/adminpage/adminpage.component';
+import { SignuppageComponent } from './page/signuppage/signuppage.component';
+import { UpdatepageComponent } from './page/updatepage/updatepage.component';
 
 const appRoutes: Routes = [
 	{
@@ -43,11 +45,11 @@ const appRoutes: Routes = [
 	},
 	{
 		path: 'shop/signup',
-		component: SignupComponent
+		component: SignuppageComponent
 	},
 	{
 		path: 'shop/update',
-		component: ShopFormComponent
+		component: UpdatepageComponent
 	},
 	{
 		path: 'shop/content',
@@ -77,7 +79,9 @@ const appRoutes: Routes = [
 		CarouselComponent,
 		CarouselItem,
 		AdminpageComponent,
-		AccountResetComponent
+		AccountResetComponent,
+		SignuppageComponent,
+		UpdatepageComponent
 	],
 	imports: [
 		RouterModule.forRoot(appRoutes),

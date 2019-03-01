@@ -5,8 +5,9 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { Constant } from '../object/constant';
+import { Util } from '../object/util';
 
-const endpoint = 'http://localhost:8080/shop/';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,14 +18,9 @@ export class AdminService {
 		private messageService: MessageService
 	) { }
 
-	private extractData(res: Response) {
-		const body = res;
-		return body || {};
-	}
-
 	getContent(): Observable<any> {
-		return this.http.get(endpoint + 'accountResetList').pipe(
-			map(this.extractData),
+		return this.http.get(Constant.endpoint + 'accountResetList').pipe(
+			map(Util.extractData),
 			catchError(
 				this.messageService.handleObservableError<{}>(
 					'Unable to retrieve Item List'
@@ -37,8 +33,8 @@ export class AdminService {
 		this.messageService.clear();
 
 		if (accountList) {
-			return this.http.post(endpoint + 'resetAccount', accountList).pipe(
-				map(this.extractData),
+			return this.http.post(Constant.endpoint + 'resetAccount', accountList).pipe(
+				map(Util.extractData),
 				catchError(
 					this.messageService.handleObservableError<{}>(
 						'Unable to reset account'

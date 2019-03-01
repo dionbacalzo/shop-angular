@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../service/authentication.service';
-import { Title } from '@angular/platform-browser';
+import { AuthenticationService } from '../../service/authentication.service';
 import { Router } from '@angular/router';
 
-import { MessageService, ErrorMessage, Message } from '../service/message.service';
+import { MessageService, ErrorMessage, Message } from '../../service/message.service';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 @Component({
@@ -19,14 +18,11 @@ export class SignupComponent implements OnInit {
 	constructor(
 		private authService: AuthenticationService,
 		private router: Router,
-		private titleService: Title,
 		private messageService: MessageService
 	) { }
 
 	ngOnInit() {
-		this.titleService.setTitle('Shop Display: Signup');
 		this.redirect();
-		this.messageService.clear();
 		this.hideSignupForm = false;
 		this.signupForm = new FormGroup({
 			'username': new FormControl(this.credentials.username, Validators.required),

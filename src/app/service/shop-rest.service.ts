@@ -5,8 +5,9 @@ import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 import { MessageService } from './message.service';
+import { Constant } from '../object/constant';
+import { Util } from '../object/util';
 
-const endpoint = 'http://localhost:8080/shop/';
 @Injectable({
 	providedIn: 'root'
 })
@@ -18,14 +19,9 @@ export class ShopRestService {
 		private messageService: MessageService
 	) { }
 
-	private extractData(res: Response) {
-		const body = res;
-		return body || {};
-	}
-
 	getContent(): Observable<any> {
-		return this.http.get(endpoint + 'viewListUnparsed').pipe(
-			map(this.extractData),
+		return this.http.get(Constant.endpoint + 'viewListUnparsed').pipe(
+			map(Util.extractData),
 			catchError(
 				this.messageService.handleObservableError<{}>(
 					'Unable to retrieve Item List'
@@ -38,8 +34,8 @@ export class ShopRestService {
 		this.messageService.clear();
 
 		if (productList) {
-			return this.http.post(endpoint + 'save', productList).pipe(
-				map(this.extractData),
+			return this.http.post(Constant.endpoint + 'save', productList).pipe(
+				map(Util.extractData),
 				catchError(
 					this.messageService.handleObservableError<{}>(
 						'Unable to Save Item List: Invalid Content'

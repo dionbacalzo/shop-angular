@@ -5,9 +5,9 @@ import {
 	FormGroup,
 	FormArray
 } from '@angular/forms';
-import { AdminService } from '../service/admin.service';
-import { User } from '../user';
-import { MessageService, Message } from '../service/message.service';
+import { AdminService } from '../../service/admin.service';
+import { User } from '../../object/user';
+import { MessageService, Message } from '../../service/message.service';
 
 @Component({
 	selector: 'account-reset',

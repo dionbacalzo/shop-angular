@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 
 import {
 	FormBuilder,
@@ -8,11 +7,11 @@ import {
 	FormGroup,
 	FormArray} from '@angular/forms';
 
-import { InventoryItem } from '../inventory-item';
+import { InventoryItem } from '../../object/inventory-item';
 
-import { ShopRestService } from '../service/shop-rest.service';
-import { MessageService, Message } from '../service/message.service';
-import { AuthenticationService } from '../service/authentication.service';
+import { ShopRestService } from '../../service/shop-rest.service';
+import { MessageService, Message } from '../../service/message.service';
+import { AuthenticationService } from '../../service/authentication.service';
 
 @Component({
 	selector: 'app-shop-form',
@@ -31,12 +30,10 @@ export class ShopFormComponent implements OnInit {
 		private rest: ShopRestService,
 		private router: Router,
 		private formBuilder: FormBuilder,
-		private titleService: Title,
 		private messageService: MessageService
 	) { }
 
 	ngOnInit() {
-		this.titleService.setTitle('Shop Display: Form');
 		this.redirect();
 		this.messageService.clear();
 		this.getContent();

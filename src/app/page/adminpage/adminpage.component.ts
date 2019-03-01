@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { MessageService } from '../service/message.service';
+import { MessageService } from '../../service/message.service';
 
 @Component({
 	selector: 'app-adminpage',

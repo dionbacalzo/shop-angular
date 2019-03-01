@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { MessageService } from '../service/message.service';
-import { ShopRestService } from '../service/shop-rest.service';
-import { InventoryItem } from '../inventory-item';
+import { MessageService } from '../../service/message.service';
+import { ShopRestService } from '../../service/shop-rest.service';
+import { InventoryItem } from '../../object/inventory-item';
 
 
 @Component({

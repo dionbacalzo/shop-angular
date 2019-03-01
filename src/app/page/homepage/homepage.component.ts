@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { MessageService } from '../service/message.service';
-import { AuthenticationService } from '../service/authentication.service';
+import { MessageService } from '../../service/message.service';
+import { AuthenticationService } from '../../service/authentication.service';
 
 @Component({
 	selector: 'app-homepage',

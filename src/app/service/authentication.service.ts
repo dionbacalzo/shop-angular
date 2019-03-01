@@ -14,9 +14,10 @@ import { Router } from '@angular/router';
 import { catchError, tap, map } from 'rxjs/operators';
 
 import { MessageService, ErrorMessage } from './message.service';
-import { User } from '../user';
+import { User } from '../object/user';
+import { Constant } from '../object/constant';
+import { Util } from '../object/util';
 
-const endpoint = 'http://localhost:8080/shop/';
 const httpOptions = {
 	loginHeaders: new HttpHeaders({
 		'Content-Type': 'application/x-www-form-urlencoded'
@@ -74,7 +75,7 @@ export class AuthenticationService implements HttpInterceptor {
 
 	getUser(): Observable<any> {
 		return this.http
-			.get(endpoint + 'retrieveUser')
+			.get(Constant.endpoint + 'retrieveUser')
 			.pipe(
 				tap(data => {
 					if (data) {
@@ -98,11 +99,11 @@ export class AuthenticationService implements HttpInterceptor {
 			.set('password', credentials.password)
 			.set('rememberMe', credentials.rememberMe);
 		this.http
-			.post(endpoint + 'loginUser', loginParams, {
+			.post(Constant.endpoint + 'loginUser', loginParams, {
 				headers: httpOptions.loginHeaders,
 				// responseType: 'text'
 			})
-			.pipe( map(this.extractData) )
+			.pipe( map(Util.extractData) )
 			.subscribe(
 				data => {
 					if (data && data['status'] === 'SUCCESS') {
@@ -128,11 +129,11 @@ export class AuthenticationService implements HttpInterceptor {
 
 	signup(credentials, callback) {
 		this.http
-			.post(endpoint + 'signupUser', credentials, {
+			.post(Constant.endpoint + 'signupUser', credentials, {
 				headers: httpOptions.signupHeaders,
 				// responseType: 'text'
 			})
-			.pipe( map(this.extractData) )
+			.pipe( map(Util.extractData) )
 			.subscribe(
 				data => {
 					return callback && callback(data);
@@ -151,7 +152,7 @@ export class AuthenticationService implements HttpInterceptor {
 		const logoutParams = new HttpParams().set('logout', 'logout');
 		this.messageService.clear();
 		return this.http
-			.post(endpoint + 'logout', logoutParams, { responseType: 'text' })
+			.post(Constant.endpoint + 'logout', logoutParams, { responseType: 'text' })
 			.pipe(
 				tap(data => {
 					this.authenticated = false;
@@ -166,8 +167,4 @@ export class AuthenticationService implements HttpInterceptor {
 			);
 	}
 
-	private extractData(res: Response) {
-		const body = res;
-		return body || {};
-	}
 }
