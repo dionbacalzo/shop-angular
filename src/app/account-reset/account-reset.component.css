@@ -1,0 +1,17 @@
+#resetForm [class*="col-"] {
+	margin: 3px 0;
+}
+
+.spinner-container {
+   height: 15em;
+   position: relative 
+}
+
+.center {
+	margin: 0;
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}

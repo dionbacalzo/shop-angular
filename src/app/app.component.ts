@@ -23,4 +23,12 @@ export class AppComponent implements OnInit {
 	get isAuthenticated(): boolean {
 		return this.authService.authenticated;
 	}
+
+	get isAdmin(): boolean {
+		let isAdmin = false;		
+		if (this.authService.user.role === 'ADMIN') {
+			isAdmin = true;
+		}
+		return isAdmin;
+	}
 }

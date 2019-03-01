@@ -27,13 +27,20 @@ import { LoginComponent } from './login/login.component';
 import { ShopRestService } from './service/shop-rest.service';
 import { MessageService } from './service/message.service';
 import { AuthenticationService } from './service/authentication.service';
+import { AdminService } from './service/admin.service';
 
 import { MessageComponent } from './message/message.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { CarouselComponent, CarouselItem } from './carousel/carousel.component';
+import { AdminpageComponent } from './adminpage/adminpage.component';
+import { AccountResetComponent } from './account-reset/account-reset.component';
 
 const appRoutes: Routes = [
+	{
+		path: 'shop/admin',
+		component: AdminpageComponent
+	},
 	{
 		path: 'shop/signup',
 		component: SignupComponent
@@ -68,7 +75,9 @@ const appRoutes: Routes = [
 		SignupComponent,
 		HomepageComponent,
 		CarouselComponent,
-		CarouselItem
+		CarouselItem,
+		AdminpageComponent,
+		AccountResetComponent
 	],
 	imports: [
 		RouterModule.forRoot(appRoutes),
@@ -94,7 +103,8 @@ const appRoutes: Routes = [
 			multi: true
 		},
 		MessageService,
-		ShopRestService
+		ShopRestService,
+		AdminService
 	],
 	bootstrap: [AppComponent]
 })

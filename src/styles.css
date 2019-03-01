@@ -227,15 +227,15 @@ button:disabled {
 		z-index: 1;
 	}
 	h1, h2 {
-		font-size: 3.2em;
+		font-size: 1.2em;
 		font-weight: 500;
 		text-transform: none;
 	}
 	#main-navbar {
-		margin-top: 5em;
+		margin-top: 2em;
 	}
 	#content {
-		margin-bottom: 5em;
+		margin-bottom: 2em;
 	}
 	#footer {
 		bottom: 0;

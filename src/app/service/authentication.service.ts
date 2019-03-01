@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { catchError, tap, map } from 'rxjs/operators';
 
 import { MessageService, ErrorMessage } from './message.service';
+import { User } from '../user';
 
 const endpoint = 'http://localhost:8080/shop/';
 const httpOptions = {
@@ -29,7 +30,7 @@ const httpOptions = {
 })
 export class AuthenticationService implements HttpInterceptor {
 	authenticated = false;
-	user: any = {username: '', firstname: '', lastname: '',  role: ''};
+	user: any = new User();
 
 	constructor(
 		private http: HttpClient,
@@ -58,7 +59,7 @@ export class AuthenticationService implements HttpInterceptor {
 
 						this.messageService.add(
 							new ErrorMessage({
-								messageDisplay: 'Login to continue'
+								messageDisplay: 'Authorized account required'
 							})
 						);
 						// immediately stop further processes and display error message
@@ -78,7 +79,7 @@ export class AuthenticationService implements HttpInterceptor {
 				tap(data => {
 					if (data) {
 						this.authenticated = true;
-						this.user = data;
+						this.user = new User(data);
 					} else {
 						this.authenticated = false;
 					}
@@ -107,7 +108,7 @@ export class AuthenticationService implements HttpInterceptor {
 					if (data && data['status'] === 'SUCCESS') {
 						this.authenticated = true;
 						if (data['details']) {
-							this.user = data['details'];
+							this.user = new User(data['details']);
 						}
 					} else {
 						this.authenticated = false;
@@ -154,6 +155,7 @@ export class AuthenticationService implements HttpInterceptor {
 			.pipe(
 				tap(data => {
 					this.authenticated = false;
+					this.user = new User();
 					this.router.navigateByUrl('/shop');
 				}),
 				catchError(
