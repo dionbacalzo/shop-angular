@@ -35,7 +35,6 @@ export class ShopFormComponent implements OnInit {
 
 	ngOnInit() {
 		this.redirect();
-		this.messageService.clear();
 		this.getContent();
 	}
 
