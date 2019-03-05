@@ -1,10 +1,23 @@
+.resetOuterContainer {
+	overflow: hidden;
+}
+
+.resetInnerContainer {
+	height: 300px;
+	overflow-y: scroll;
+}
+
+input {
+  vertical-align: bottom;
+}
+
 #resetForm [class*="col-"] {
-	margin: 3px 0;
+	margin: 5px 0;
 }
 
 .spinner-container {
-   height: 15em;
-   position: relative 
+	height: 15em;
+	position: relative 
 }
 
 .center {
