@@ -1,6 +1,15 @@
 # ShopAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
+The backend of this project is the [Shop](https://github.com/dionbacalzo/Shop) repository
+
+## Carousel
+
+Optional Parameters:
+
+ - height - height of the carousel. The input should be a valid height css value e.g. 100px. If not present then the height of the carousel will automatically default to 100%
+ - width - width of the carousel. The input should be a valid width css value e.g. 100px. If not present then the width of the carousel will automatically default to 100%
+ - automatic - The input should be a valid number. If present then the slider will automatically activate for every x second where x is the input.
 
 All carousel images taken from [https://www.pexels.com](https://www.pexels.com) free for personal and commercial use
 
