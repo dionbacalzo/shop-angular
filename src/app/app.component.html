@@ -12,6 +12,9 @@
 			<ng-container *ngIf="isAuthenticated">
 				<li><a routerLinkActive="active" routerLink="/shop/update">Update</a></li>
 			</ng-container>
+			<ng-container *ngIf="isAuthenticated">
+				<li><a routerLinkActive="active" routerLink="/shop/profile">Profile</a></li>
+			</ng-container>
 			<ng-container *ngIf="isAdmin">
 				<li><a routerLinkActive="active" routerLink="/shop/admin">Admin</a></li>
 			</ng-container>
