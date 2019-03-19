@@ -62,9 +62,11 @@ export class ProfileUpdateComponent implements OnInit {
 	update() {
 		this.hideProfileForm = true;
 		this.user = this.profileForm.value;
-		this.userService.update(this.user).subscribe( data => {
-			if (data) {
-				this.messageService.clear();
+		let formData:FormData = new FormData();		
+		formData.append('user', JSON.stringify(this.user));
+		this.messageService.clear();
+		this.userService.update(formData).subscribe( data => {
+			if (data) {				
 				if (data) {
 					this.user.firstname = data.firstname;
 					this.user.lastname = data.lastname;
@@ -92,14 +94,10 @@ export class ProfileUpdateComponent implements OnInit {
 	redirect() {
 		if (this.authService.authenticated === false) {
 			this.authService.getUser().subscribe(data => {
-				if (this.authService.authenticated !== true) {
+				if (this.authService.authenticated === false) {
 					this.router.navigateByUrl('/shop');
 				}
 			});
-		} else {
-			if (this.authService.authenticated !== true) {
-				this.router.navigateByUrl('/shop');
-			}
 		}
 	}
 }

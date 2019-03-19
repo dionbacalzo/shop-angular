@@ -108,14 +108,10 @@ export class PasswordUpdateComponent implements OnInit {
   redirect() {
     if (this.authService.authenticated === false) {
       this.authService.getUser().subscribe(data => {
-        if (this.authService.authenticated !== true) {
+        if (this.authService.authenticated === false) {
           this.router.navigateByUrl('/shop');
         }
       });
-    } else {
-      if (this.authService.authenticated !== true) {
-        this.router.navigateByUrl('/shop');
-      }
     }
   }
 }

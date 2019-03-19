@@ -22,11 +22,9 @@ export class UserService {
   constructor(private http: HttpClient,
     private messageService: MessageService) { }
 
-  update(user: { firstname: string; lastname: string; }): Observable<any> {
+  update(user): Observable<any> {
     return this.http
-      .post(Constant.endpoint + 'updateUser', user, {
-        headers: httpOptions.contentTypeJson
-      })
+      .post(Constant.endpoint + 'updateUser', user)
       .pipe(map(Util.extractData),
         catchError(
           this.messageService.handleObservableError<{}>(
