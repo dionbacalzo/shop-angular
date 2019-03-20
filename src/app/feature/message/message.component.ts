@@ -44,4 +44,8 @@ export class MessageComponent implements OnInit {
 		});
 		this.messageContainerList = newMessageContainerList;
 	}
+
+	remove(index) {
+		this.messageContainerList.splice(index, 1)
+	}
 }
