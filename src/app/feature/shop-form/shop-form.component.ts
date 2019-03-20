@@ -34,19 +34,10 @@ export class ShopFormComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.redirect();
+		//redirect to homepage if a use is not logged in
+		this.authService.redirectToHome(false);
 		this.getContent();
-	}
-
-	redirect() {
-		if (this.authService.authenticated === false) {
-			this.authService.getUser().subscribe(data => {
-				if (this.authService.authenticated === false) {
-					this.router.navigateByUrl('/shop');
-				}
-			});
-		}
-	}
+	}	
 
 	createItem(): FormGroup {
 		return this.formBuilder.group(new InventoryItem());

@@ -24,7 +24,7 @@ export class PasswordUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.redirect();
+    this.authService.redirectToHome(false);
     this.hidePasswordForm = false;
     this.passwordForm = new FormGroup({
       'password': new FormControl(this.user.password, Validators.required),
@@ -105,13 +105,4 @@ export class PasswordUpdateComponent implements OnInit {
     };
   }
 
-  redirect() {
-    if (this.authService.authenticated === false) {
-      this.authService.getUser().subscribe(data => {
-        if (this.authService.authenticated === false) {
-          this.router.navigateByUrl('/shop');
-        }
-      });
-    }
-  }
 }

@@ -22,7 +22,8 @@ export class SignupComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.redirect();
+		//redirect to homepage if a user is logged in
+		this.authService.redirectToHome(true);
 		this.hideSignupForm = false;
 		this.signupForm = new FormGroup({
 			'username': new FormControl(this.credentials.username, Validators.required),
@@ -84,19 +85,5 @@ export class SignupComponent implements OnInit {
 				matchingControl.setErrors(null);
 			}
 		};
-	}
-
-	redirect() {
-		if (this.authService.authenticated === false) {
-			this.authService.getUser().subscribe(data => {
-				if (this.authService.authenticated === true) {
-					this.router.navigateByUrl('/shop');
-				}
-			});
-		} else {
-			if (this.authService.authenticated === true) {
-				this.router.navigateByUrl('/shop');
-			}
-		}
 	}
 }

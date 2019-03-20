@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 		});
 		this.hideLoginForm = false;
 		// no need to redirect now that login component is at homepage
-		// this.redirect();
+		// this.authService.redirectToHome(true);
 		// this.messageService.clear();
 	}
 
@@ -63,18 +63,5 @@ export class LoginComponent implements OnInit {
 			}
 		});
 	}
-
-	redirect() {
-		if (this.authService.authenticated === false) {
-			this.authService.getUser().subscribe(() => {
-				if (this.authService.authenticated === true) {
-					this.router.navigateByUrl('/shop');
-				}
-			});
-		} else {
-			if (this.authService.authenticated === true) {
-				this.router.navigateByUrl('/shop');
-			}
-		}
-	}
+	
 }

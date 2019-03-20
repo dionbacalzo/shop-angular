@@ -167,4 +167,21 @@ export class AuthenticationService implements HttpInterceptor {
 			);
 	}
 
+	/**
+	 * will redirect to home page id a user is authenticated or not depending on the parameter
+	 */
+	redirectToHome(isAuthenticated: boolean) {
+		if (this.authenticated === false) {
+			this.getUser().subscribe(data => {
+				if (this.authenticated === isAuthenticated) {
+					this.router.navigateByUrl('/shop');
+				}
+			});
+		} else {
+			if (this.authenticated === isAuthenticated) {
+				this.router.navigateByUrl('/shop');
+			}
+		}
+	}
+
 }

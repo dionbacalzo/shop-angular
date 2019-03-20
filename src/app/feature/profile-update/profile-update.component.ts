@@ -26,7 +26,7 @@ export class ProfileUpdateComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.redirect();
+		this.authService.redirectToHome(false);
 		this.hideProfileForm = false;
 		this.updateForm();
 		this.initilializeProfileDetails();
@@ -138,14 +138,5 @@ export class ProfileUpdateComponent implements OnInit {
 			}
 		};
 	}
-
-	redirect() {
-		if (this.authService.authenticated === false) {
-			this.authService.getUser().subscribe(data => {
-				if (this.authService.authenticated === false) {
-					this.router.navigateByUrl('/shop');
-				}
-			});
-		}
-	}
+	
 }
