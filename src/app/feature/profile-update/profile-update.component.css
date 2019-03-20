@@ -17,3 +17,12 @@
      font-size: 0.8em;
      color: red;
  }
+
+ .ng-invalid:not(form).ng-touched:not(form) {
+    border: 1px solid #a94442; /* red */
+  }
+
+ #pic-preview {
+    width: 128px;
+    height: 128px;
+}
