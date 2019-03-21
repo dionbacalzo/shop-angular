@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AccountResetComponent } from './account-reset.component';
+import { AppModule } from 'src/app/app.module';
 
 describe('AccountResetComponent', () => {
   let component: AccountResetComponent;
@@ -8,7 +9,7 @@ describe('AccountResetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AccountResetComponent ]
+      imports: [ AppModule ]
     })
     .compileComponents();
   }));

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PasswordUpdateComponent } from './password-update.component';
+import { AppModule } from 'src/app/app.module';
 
 describe('PasswordUpdateComponent', () => {
   let component: PasswordUpdateComponent;
@@ -8,7 +9,7 @@ describe('PasswordUpdateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PasswordUpdateComponent ]
+      imports: [ AppModule ]
     })
     .compileComponents();
   }));

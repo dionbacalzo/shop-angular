@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminpageComponent } from './adminpage.component';
+import { AppModule } from 'src/app/app.module';
 
 describe('AdminpageComponent', () => {
   let component: AdminpageComponent;
@@ -8,7 +9,7 @@ describe('AdminpageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminpageComponent ]
+      imports: [ AppModule ]
     })
     .compileComponents();
   }));
@@ -21,5 +22,11 @@ describe('AdminpageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it(`should have as title 'Shop Display: Admin'`, () => {
+    const fixture = TestBed.createComponent(AdminpageComponent);
+    const app = fixture.debugElement.componentInstance;
+    expect(app.titleService.getTitle()).toEqual('Shop Display: Admin');
   });
 });
