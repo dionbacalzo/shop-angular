@@ -33,17 +33,6 @@ export class UserService {
         ))
   }
 
-  retrieveProfile(): Observable<any> {
-    return this.http.get(Constant.endpoint + 'retrieveUser').pipe(
-      map(Util.extractData),
-      catchError(
-        this.messageService.handleObservableError<{}>(
-          'Unable to retrieve Profile'
-        )
-      )
-    );
-  }
-
   updatePassword(user): Observable<any> {
     return this.http.post(Constant.endpoint + 'updatePassword', user, {
       headers: httpOptions.contentTypeJson

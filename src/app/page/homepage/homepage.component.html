@@ -1,7 +1,7 @@
 <div class="col-12">
 	<div class="col-6">
-		<app-login [hidden]="isAuthenticated"></app-login>
-		<div [hidden]="!isAuthenticated" [ngClass]="isAuthenticated ? 'welcome-user' : ''">
+		<app-login *ngIf="!isAuthenticated"></app-login>
+		<div *ngIf="isAuthenticated" [ngClass]="isAuthenticated ? 'welcome-user' : ''">
 			<div>
 				Hello {{user.firstname}} {{user.lastname}}
 			</div>

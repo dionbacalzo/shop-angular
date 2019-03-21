@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { AuthenticationService } from '../../service/authentication.service';
 import { UserService } from '../../service/user.service';
-import { Router } from '@angular/router';
 
 import { MessageService, ErrorMessage, Message } from '../../service/message.service';
 import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
+import { User } from 'src/app/object/user';
 
 @Component({
 	selector: 'profile-update',
@@ -12,52 +12,39 @@ import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/f
 	styleUrls: ['./profile-update.component.css']
 })
 export class ProfileUpdateComponent implements OnInit {
-	user = { firstname: '', lastname: '', picture: null };
+	user = new User();
 	profileForm: FormGroup;
 	hideProfileForm: boolean;
-	pictureSrc: String | ArrayBuffer;
+	pictureSrc: String | ArrayBuffer = 'assets/images/default-pic.png';
 	@ViewChild('pictureRef') pictureRef: ElementRef;
 
 	constructor(
 		private authService: AuthenticationService,
 		private userService: UserService,
-		private router: Router,
 		private messageService: MessageService
 	) { }
 
-	ngOnInit() {
-		this.authService.redirectToHome(false);
-		this.hideProfileForm = false;
+	ngOnInit() {	
+		this.hideProfileForm = true;	
 		this.updateForm();
-		this.initilializeProfileDetails();
+		this.authService.redirectToHome(false, ()=>{
+			this.hideProfileForm = false;		
+			this.user = this.authService.user;			
+			if (this.user.picture) {
+				//user picture byte info for preview 
+				this.pictureSrc = 'data:image/png;base64,' + this.user.picture;
+				//remove picture byte information to not display at input
+				this.user.picture = undefined;
+			} else {
+				this.pictureSrc = 'assets/images/default-pic.png';
+			}
+			this.updateForm();			
+		});		
 	}
 
 	get firstname() { return this.profileForm.get('firstname'); }
 	get lastname() { return this.profileForm.get('lastname'); }
 	get picture() { return this.profileForm.get('picture'); }
-
-	initilializeProfileDetails() {
-		this.pictureSrc = 'assets/images/default-pic.png';
-		this.hideProfileForm = true;
-		this.userService.retrieveProfile().subscribe(data => {
-			if (data) {
-				this.messageService.clear();
-				this.user.firstname = data.firstname;
-				this.user.lastname = data.lastname;
-				if (data.picture) {
-					this.pictureSrc = 'data:image/png;base64,' + data.picture;
-				}
-				this.updateForm();
-			} else {
-				this.messageService.add(
-					new ErrorMessage({
-						messageDisplay: 'Unable to retrieve Profile'
-					})
-				);
-			}
-			this.hideProfileForm = false;
-		});
-	}
 
 	updateForm() {
 		this.profileForm = new FormGroup({
@@ -138,5 +125,5 @@ export class ProfileUpdateComponent implements OnInit {
 			}
 		};
 	}
-	
+
 }
