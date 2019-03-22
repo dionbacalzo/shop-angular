@@ -29,7 +29,8 @@ export class ProfileUpdateComponent implements OnInit {
 		this.updateForm();
 		this.authService.redirectToHome(false, ()=>{
 			this.hideProfileForm = false;		
-			this.user = this.authService.user;			
+			//get a copy of the logged in user
+			this.user =JSON.parse(JSON.stringify(this.authService.user))			
 			if (this.user.picture) {
 				//user picture byte info for preview 
 				this.pictureSrc = 'data:image/png;base64,' + this.user.picture;

@@ -41,42 +41,49 @@ import { AdminpageComponent } from './page/adminpage/adminpage.component';
 import { SignuppageComponent } from './page/signuppage/signuppage.component';
 import { UpdatepageComponent } from './page/updatepage/updatepage.component';
 import { ProfilepageComponent } from './page/profilepage/profilepage.component';
-
+import { AuthGuard } from './auth.guard';
 
 const appRoutes: Routes = [
-    {
-        path: 'shop/profile',
-        component: ProfilepageComponent
-    },
-    {
-        path: 'shop/admin',
-        component: AdminpageComponent
-    },
-    {
-        path: 'shop/signup',
-        component: SignuppageComponent
-    },
-    {
-        path: 'shop/update',
-        component: UpdatepageComponent
-    },
-    {
-        path: 'shop/content',
-        component: HomepageComponent
-    },
-    {
-        path: 'shop',
-        redirectTo: 'shop/content',
-        pathMatch: 'full'
-    },
     {
         path: '',
         redirectTo: 'shop/content',
         pathMatch: 'full'
+    },
+    {
+        path: 'shop',
+        canActivate: [AuthGuard],
+        children: [
+            {
+                path: '',
+                redirectTo: 'content',
+                pathMatch: 'full'
+            },
+            {
+                path: 'content',
+                component: HomepageComponent
+            },
+            {
+                path: 'profile',
+                component: ProfilepageComponent
+            },
+            {
+                path: 'admin',
+                component: AdminpageComponent
+            },
+            {
+                path: 'signup',
+                component: SignuppageComponent
+            },
+            {
+                path: 'update',
+                component: UpdatepageComponent
+            }            
+        ]
     }
+
 ];
 
-@NgModule( {
+@NgModule({
     declarations: [
         AppComponent,
         ShopComponent,
@@ -96,7 +103,7 @@ const appRoutes: Routes = [
         PasswordUpdateComponent
     ],
     imports: [
-        RouterModule.forRoot( appRoutes ),
+        RouterModule.forRoot(appRoutes),
         FormsModule,
         ReactiveFormsModule,
         BrowserModule,
@@ -124,5 +131,5 @@ const appRoutes: Routes = [
         UserService
     ],
     bootstrap: [AppComponent]
-} )
+})
 export class AppModule { }

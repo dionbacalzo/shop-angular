@@ -176,12 +176,12 @@ export class AuthenticationService implements HttpInterceptor {
 	
 	redirect(isAuthenticated: boolean, url: string, callback?) {
 		if (this.authenticated === false) {
-			this.getUser().subscribe(data => {
+			//this.getUser().subscribe(data => {
 				callback && callback();
 				if (this.authenticated === isAuthenticated) {
 					this.router.navigateByUrl(url);
 				}
-			});
+			//});
 		} else {
 			callback && callback();
 			if (this.authenticated === isAuthenticated) {
