@@ -3,6 +3,9 @@
 		<app-login *ngIf="!isAuthenticated"></app-login>
 		<div *ngIf="isAuthenticated" [ngClass]="isAuthenticated ? 'welcome-user' : ''">
 			<div>
+				<img id="pic-preview" [src]="pictureSrc" alt="your image" />
+			</div>
+			<div>
 				Hello {{user.firstname}} {{user.lastname}}
 			</div>
 			<div>

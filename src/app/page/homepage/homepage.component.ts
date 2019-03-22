@@ -10,6 +10,8 @@ import { AuthenticationService } from '../../service/authentication.service';
 })
 export class HomepageComponent implements OnInit {
 
+	pictureSrc: String | ArrayBuffer = 'assets/images/default-pic.png';
+
 	constructor(
 		private authService: AuthenticationService,
 		private titleService: Title,
@@ -19,6 +21,10 @@ export class HomepageComponent implements OnInit {
 	ngOnInit() {
 		this.titleService.setTitle('Shop Display: Home');
 		this.messageService.clear();
+		
+		if(this.user.picture) {
+			this.pictureSrc = 'data:image/png;base64,' + this.user.picture;
+		}
 	}
 
 	get isAuthenticated(): boolean {
