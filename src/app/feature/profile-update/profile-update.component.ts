@@ -71,7 +71,7 @@ export class ProfileUpdateComponent implements OnInit {
 		this.hideProfileForm = true;
 		this.user = this.profileForm.value;
 		let formData: FormData = new FormData();
-		if (this.pictureRef.nativeElement.files) {
+		if (this.pictureRef && this.pictureRef.nativeElement.files) {
 			formData.append('picture', this.pictureRef.nativeElement.files[0]);
 			this.user.picture = undefined;
 			formData.append('user', JSON.stringify(this.user));
@@ -113,7 +113,7 @@ export class ProfileUpdateComponent implements OnInit {
 				return;
 			}
 			let fileSize = 0;
-			if (this.pictureRef.nativeElement.files.length) {
+			if (this.pictureRef && this.pictureRef.nativeElement.files.length) {
 				fileSize = this.pictureRef.nativeElement.files[0].size;
 			} else {
 				return;

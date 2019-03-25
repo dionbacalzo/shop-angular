@@ -19,7 +19,7 @@
 		<div class="col-12" *ngIf="emptyUserList">
 			There are no Accounts to Display
 		</div>
-		<div class="col-12 spinner-container" [hidden]="!hideResetForm || emptyUserList || errorUserList">
+		<div class="col-12 spinner-container" *ngIf="hideResetForm && !emptyUserList && !errorUserList">
 			<mat-spinner class="center"></mat-spinner>
 		</div>
 	</div>

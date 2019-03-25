@@ -1,4 +1,4 @@
-<div id="itemTableContainer" class="col-12" [hidden]="hideItemList">
+<div id="itemTableContainer" class="col-12" *ngIf="!hideItemList">
   <div class="col-12">
     <div class="col-4">&nbsp;</div>
     <div id="itemTableTitle" class="col-4">Item List</div>
@@ -47,7 +47,7 @@
     ></mat-paginator>
   </div>
 </div>
-<div class="col-12 spinner-container" [hidden]="!hideItemList || errorItemList || emptyItemList">
+<div class="col-12 spinner-container" *ngIf="hideItemList && !errorItemList && !emptyItemList">
     <mat-spinner class="center"></mat-spinner>
 </div>
 

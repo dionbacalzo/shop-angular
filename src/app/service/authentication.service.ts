@@ -122,7 +122,8 @@ export class AuthenticationService implements HttpInterceptor {
 					this.messageService.handleError(
 						error,
 						'You are unable to login at this moment'
-					);
+					);					
+					return callback && callback(undefined);
 				}
 			);
 	}

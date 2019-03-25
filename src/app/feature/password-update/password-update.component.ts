@@ -43,10 +43,9 @@ export class PasswordUpdateComponent implements OnInit {
   updatePassword() {
     this.hidePasswordForm = true;
     this.user = this.passwordForm.value;
-    this.userService.updatePassword(this.user).subscribe(data => {
-      this.messageService.clear();
-      if (data) {
-        this.messageService.clear();
+    this.messageService.clear();    
+    this.userService.updatePassword(this.user).subscribe(data => {            
+      if (data && Object.keys(data).length) {        
         if (data.status === 'FAIL') {
           this.messageService.add(
             new ErrorMessage({
@@ -62,6 +61,14 @@ export class PasswordUpdateComponent implements OnInit {
             })
           );
         }
+        //display error message for caught exceptions from backend
+      } else if (data !== undefined) {
+        this.messageService.add(
+          new Message({
+            type: 'error',
+            messageDisplay: 'Unable to update password'
+          })
+        );
       }
       this.hidePasswordForm = false;
     });

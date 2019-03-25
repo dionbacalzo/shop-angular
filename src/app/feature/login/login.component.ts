@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 	credentials = { username: '', password: '', rememberMe: '' };
 	loginForm: FormGroup;
 	hideLoginForm: boolean;
+	errorLoginForm: boolean;
 
 	constructor(
 		private authService: AuthenticationService,
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
 			'rememberMe': new FormControl(this.credentials.rememberMe),
 		});
 		this.hideLoginForm = false;
+		this.errorLoginForm = false;
 		// no need to redirect now that login component is at homepage
 		// this.authService.redirectToHome(true);
 		// this.messageService.clear();
@@ -41,10 +43,11 @@ export class LoginComponent implements OnInit {
 
 	login() {
 		this.hideLoginForm = true;
+		this.errorLoginForm = false;
 		this.credentials = this.loginForm.value;
-		this.authService.authenticate(this.credentials, data => {
-			if (data) {
-				this.messageService.clear();
+		this.messageService.clear();
+		this.authService.authenticate(this.credentials, data => {			
+			if (data) {				
 				if (data.status === 'FAIL') {
 					this.messageService.add(new ErrorMessage({
 						messageDisplay: data.message
@@ -58,9 +61,11 @@ export class LoginComponent implements OnInit {
 						})
 					);
 					this.router.navigateByUrl('/shop');
-				}
-				this.hideLoginForm = false;
+				}				
+			} else {
+				this.errorLoginForm = true;
 			}
+			this.hideLoginForm = false;
 		});
 	}
 	
