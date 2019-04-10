@@ -163,7 +163,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
 	 * Responsive Design
 	 * @param event 
 	 */
-	onResize() {
+	onResize($event: any) {
 		this.items.forEach((child) => {
 			if (this.carousel.nativeElement.offsetWidth != child.width) {
 				child.setWidth(this.carousel.nativeElement.offsetWidth);

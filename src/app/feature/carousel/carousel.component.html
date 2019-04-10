@@ -1,4 +1,4 @@
-<section class="carousel-wrapper" [ngStyle]="calculateSize(width, height)" (window:resize)="onResize($event)">
+<section class="carousel-wrapper" [ngStyle]="calculateSize(width, height)" (window:resize)="onResize()">
 	<ul class="carousel-inner" [ngStyle]="calculateSize(width, height)" #carousel>
 		<ng-content></ng-content>
 	</ul>
