@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import {
 	FormBuilder,
 	FormControl,
@@ -24,10 +24,12 @@ export class AccountResetComponent implements OnInit {
 	});
 	contentEdited: boolean;
 	resetAccountList = [];
+	@ViewChild('resetInnerContainer') private resetInnerContainer: ElementRef;	
 
 	constructor(private adminRest: AdminService,
 		private formBuilder: FormBuilder,
-		private messageService: MessageService
+		private messageService: MessageService, 
+		private cdRef: ChangeDetectorRef
 	) { }
 
 	ngOnInit() {
@@ -41,6 +43,7 @@ export class AccountResetComponent implements OnInit {
 	getUserList() {
 		this.adminRest.getContent().subscribe((data) => {
 			this.setResetForm(data);
+			this.setresetInnerContainerClass();
 		}, err => {
 			//hide loading screen
 			this.errorUserList = true;
@@ -102,6 +105,7 @@ export class AccountResetComponent implements OnInit {
 					messageDisplay: 'Reset of Account Login Chances is Successfull'
 				})
 			);
+			this.setresetInnerContainerClass();
 		}, err => {
 			//hide loading screen
 			this.errorUserList = true;
@@ -111,6 +115,28 @@ export class AccountResetComponent implements OnInit {
 				this.emptyUserList = true;
 			}
 		});
+	}
+
+	resetInnerContainerClass = {
+		'resetInnerContainer': false,
+		'resetInnerContainer-overflow': true
+	}
+
+	/**
+	 * removes the scroll bar if there is no overflow
+	 */
+	setresetInnerContainerClass() {
+		// check first for changes before check for overflow
+		this.cdRef.detectChanges();	
+		if (this.resetInnerContainer && this.resetInnerContainer.nativeElement) {
+			let element = this.resetInnerContainer.nativeElement;
+			if (element.scrollHeight <= element.clientHeight) {
+				this.resetInnerContainerClass = {
+					'resetInnerContainer': true,
+					'resetInnerContainer-overflow': false
+				}
+			}
+		}
 	}
 
 }

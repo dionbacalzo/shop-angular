@@ -4,6 +4,10 @@
 
 .resetInnerContainer {
 	height: 300px;
+}
+
+.resetInnerContainer-overflow {
+	height: 300px;
 	overflow-y: scroll;
 }
 

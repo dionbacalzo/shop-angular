@@ -4,7 +4,7 @@
 		<h4>Reset Account Login Chances Form</h4>
 		<form [formGroup]="resetForm" #formDir="ngForm" id="resetForm" class="resetOuterContainer" role="form" (submit)="reset()"
 		 *ngIf="!emptyUserList">
-			<div formArrayName="users" class="resetInnerContainer">
+			<div formArrayName="users" [ngClass]="resetInnerContainerClass" #resetInnerContainer>
 				<ng-container *ngFor="let user of users.controls; let i=index">
 					<div [formGroupName]="i" class="form-group col-12">
 						<label for="username"><input type="checkbox" class="form-control" id="username" name="username" (change)="toggleEditable($event)"
