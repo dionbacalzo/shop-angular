@@ -24,11 +24,16 @@ export class AccountResetComponent implements OnInit {
 	});
 	contentEdited: boolean;
 	resetAccountList = [];
-	@ViewChild('resetInnerContainer') private resetInnerContainer: ElementRef;	
+	@ViewChild('resetInnerContainer') private resetInnerContainer: ElementRef;
+
+	resetInnerContainerClass = {
+		'resetInnerContainer': false,
+		'resetInnerContainer-overflow': true
+	}
 
 	constructor(private adminRest: AdminService,
 		private formBuilder: FormBuilder,
-		private messageService: MessageService, 
+		private messageService: MessageService,
 		private cdRef: ChangeDetectorRef
 	) { }
 
@@ -72,6 +77,7 @@ export class AccountResetComponent implements OnInit {
 				this.users.push(userFormGroup);
 			});
 			this.hideResetForm = false;
+			this.contentEdited = false;
 		}
 		else {
 			this.hideResetForm = false;
@@ -79,12 +85,15 @@ export class AccountResetComponent implements OnInit {
 		}
 	}
 
-	toggleEditable(event) {
+	/**
+	 * initializes username list for submit and submit button behaviour
+	 * @param event 
+	 */
+	setupUsernameList(event) {
 		let userChecked = {
 			username: event.target.value
 		};
 		if (event.target.checked) {
-			this.contentEdited = true;
 			this.resetAccountList.push(userChecked);
 		} else {
 			this.resetAccountList.forEach((item, index) => {
@@ -92,6 +101,19 @@ export class AccountResetComponent implements OnInit {
 					this.resetAccountList.splice(index, 1)
 				};
 			});
+		}
+
+		this.toggleEditable();
+	}
+
+	/**
+	 * enable submit button if at least one username is selected	
+	 */
+	toggleEditable() {
+		if (this.resetAccountList && this.resetAccountList.length !== 0) {
+			this.contentEdited = true;
+		} else {
+			this.contentEdited = false;
 		}
 	}
 
@@ -117,17 +139,12 @@ export class AccountResetComponent implements OnInit {
 		});
 	}
 
-	resetInnerContainerClass = {
-		'resetInnerContainer': false,
-		'resetInnerContainer-overflow': true
-	}
-
 	/**
 	 * removes the scroll bar if there is no overflow
 	 */
 	setresetInnerContainerClass() {
 		// check first for changes before check for overflow
-		this.cdRef.detectChanges();	
+		this.cdRef.detectChanges();
 		if (this.resetInnerContainer && this.resetInnerContainer.nativeElement) {
 			let element = this.resetInnerContainer.nativeElement;
 			if (element.scrollHeight <= element.clientHeight) {
