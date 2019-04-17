@@ -42,6 +42,7 @@ import { SignuppageComponent } from './page/signuppage/signuppage.component';
 import { UpdatepageComponent } from './page/updatepage/updatepage.component';
 import { ProfilepageComponent } from './page/profilepage/profilepage.component';
 import { AuthGuard } from './auth.guard';
+import { PathLocationStrategy, LocationStrategy } from '@angular/common';
 
 const appRoutes: Routes = [
     {
@@ -103,7 +104,7 @@ const appRoutes: Routes = [
         PasswordUpdateComponent
     ],
     imports: [
-        RouterModule.forRoot(appRoutes),
+        RouterModule.forRoot(appRoutes,{ useHash: true }),
         FormsModule,
         ReactiveFormsModule,
         BrowserModule,
@@ -125,6 +126,7 @@ const appRoutes: Routes = [
             useClass: AuthenticationService,
             multi: true
         },
+        {provide: LocationStrategy, useClass: PathLocationStrategy},
         MessageService,
         ShopRestService,
         AdminService,

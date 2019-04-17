@@ -25,6 +25,51 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
+## Build for production
+
+### Tomcat
+
+it will be a lot better to use this as a root so replace the ROOT folder from the webapp folder
+
+build the ROOT folder using the command
+
+`ng build --prod --output-path ROOT`
+
+If you want to not have the app at the root folder then use the command below to access the app using shop as the base url.
+
+`ng build --prod --output-path shop --base-href ../shop/`
+
+you can change shop path using any other word
+then access the app using [http://localhost:8080/shop](http://localhost:8080/shop)
+The problem with this approach is it will have an extra url path (in this case /shop) at the url i.e. http://localhost:8080/shop/shop/content when navigating the site.
+
+### Resolve Deep linking issue using tomcat server
+
+1. Configure the RewriteValve in server.xml
+Edit the ~/conf/server.xml to add the below Valve inside the Host section as below –
+```
+...
+      <Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true">
+
+        <Valve className="org.apache.catalina.valves.rewrite.RewriteValve" />
+
+...
+      </Host>
+...
+```
+2. Write the rewrite rule in rewrite.config
+Create directory structure – ~/conf/Catalina/localhost/ and create the rewrite.config file inside it with the below content if the index.html is in the ROOT folder
+```
+RewriteCond %{REQUEST_PATH} !-f
+RewriteRule ^/shop(.*) /index.html
+```
+otherwise redirect to the folder where the index.html is found
+
+After setting this up restart the tomcat server and you can hit the deep links of the application which will route to the correct components inside the angular application.
+
+**Don't forget to clear the cache after updating or removing these changes**
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).

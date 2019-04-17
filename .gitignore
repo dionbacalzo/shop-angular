@@ -4,6 +4,8 @@
 /dist
 /tmp
 /out-tsc
+/ROOT
+/shop
 
 # dependencies
 /node_modules
