@@ -17,7 +17,6 @@ export class SignupComponent implements OnInit {
 
 	constructor(
 		private authService: AuthenticationService,
-		private router: Router,
 		private messageService: MessageService
 	) { }
 

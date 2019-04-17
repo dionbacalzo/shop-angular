@@ -145,6 +145,7 @@ export class AuthenticationService implements HttpInterceptor {
 						error,
 						'You are unable to signup at this moment'
 					);
+					return callback && callback(undefined);
 				}
 			);
 	}
