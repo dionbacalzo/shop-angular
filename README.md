@@ -3,6 +3,16 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.0.
 The backend of this project is the [Shop](https://github.com/dionbacalzo/Shop) repository
 
+# Docker
+
+ - Make sure that at the terminal you are in is at the root folder shop-angular/ before running the docker commands
+ - At the constants.ts file change the endpoint to the host's ip address i.e. 127.0.0.1
+ - run the following commands
+```
+docker build -t angular:1.0 .
+docker run -d -p 4200:4200 angular:1.0
+```
+
 ## Carousel
 
 Optional Parameters:

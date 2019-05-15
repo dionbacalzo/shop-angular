@@ -1,6 +1,8 @@
 // Karma configuration file, see link for more information
 // https://karma-runner.github.io/1.0/config/configuration-file.html
 
+// TODO look into https://github.com/sindresorhus/is-docker to check if test is running in docker
+
 module.exports = function (config) {
   config.set({
     basePath: '',
@@ -25,7 +27,13 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    browsers: ['ChromeHeadless'], // change to Chrome for brwoser to appear, cutomLaunchers added for docker
+    customLaunchers: { 
+      'ChromeHeadless': {
+        base: 'Chrome',
+        flags: ['--no-sandbox', '--headless', '--disable-gpu', '--remote-debugging-port=9222']
+      }
+    },
+    singleRun: true // set to false if you want to leave the browser up    
   });
 };
