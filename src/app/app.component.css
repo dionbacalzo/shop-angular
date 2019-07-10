@@ -1,4 +1,4 @@
-.logout {
+.logout a {
 	float: right;
    	display: block;
 	color: #fff;
@@ -9,6 +9,6 @@
 }
 
 /* Change the link color to #555 (gray) on hover */
-.logout:hover {
-	background-color: #555;
+.logout a:hover {
+	background-color: #d43f3f;
 }
