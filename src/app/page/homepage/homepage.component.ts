@@ -20,11 +20,7 @@ export class HomepageComponent implements OnInit {
 
 	ngOnInit() {
 		this.titleService.setTitle('Shop Display: Home');
-		this.messageService.clear();
-		
-		if(this.user.picture) {
-			this.pictureSrc = 'data:image/png;base64,' + this.user.picture;
-		}
+		this.messageService.clear();		
 	}
 
 	get isAuthenticated(): boolean {
