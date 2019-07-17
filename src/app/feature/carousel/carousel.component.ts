@@ -39,7 +39,7 @@ export class CarouselComponent implements AfterViewInit, OnDestroy {
 	@Input() width: String = undefined;
 	@Input() height: String = undefined;
 	@Input() automatic: number = undefined;
-	@ViewChild('carousel') private carousel: ElementRef;
+	@ViewChild('carousel', { static: true }) private carousel: ElementRef;
 
 	timing = '250ms ease-in';
 	private player: AnimationPlayer;
