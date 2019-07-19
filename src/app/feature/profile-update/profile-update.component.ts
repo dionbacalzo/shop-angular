@@ -16,7 +16,7 @@ export class ProfileUpdateComponent implements OnInit {
 	profileForm: FormGroup;
 	hideProfileForm: boolean;
 	pictureSrc: String | ArrayBuffer = 'assets/images/default-pic.png';
-	@ViewChild('pictureRef') pictureRef: ElementRef;
+	@ViewChild('pictureRef', { static: true }) pictureRef: ElementRef;
 
 	constructor(
 		private authService: AuthenticationService,

@@ -24,7 +24,7 @@ export class AccountResetComponent implements OnInit {
 	});
 	contentEdited: boolean;
 	resetAccountList = [];
-	@ViewChild('resetInnerContainer') private resetInnerContainer: ElementRef;
+	@ViewChild('resetInnerContainer', { static: false }) private resetInnerContainer: ElementRef;
 
 	resetInnerContainerClass = {
 		'resetInnerContainer': false,

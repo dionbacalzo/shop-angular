@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { MessageService } from '../../service/message.service';
 import { ShopRestService } from '../../service/shop-rest.service';
 import { InventoryItem } from '../../object/inventory-item';
@@ -18,8 +20,8 @@ export class ShopComponent implements OnInit {
 
 	displayedColumns: string[] = ['title', 'price', 'type', 'manufacturer', 'releaseDate'];
 	dataSource: MatTableDataSource<InventoryItem<{}>>;
-	@ViewChild(MatPaginator) paginator: MatPaginator;
-	@ViewChild(MatSort) sort: MatSort;
+	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+	@ViewChild(MatSort, { static: true }) sort: MatSort;
 
 	constructor(
 		private rest: ShopRestService,
