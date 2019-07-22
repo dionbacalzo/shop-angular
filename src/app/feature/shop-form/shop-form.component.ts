@@ -28,7 +28,6 @@ export class ShopFormComponent implements OnInit {
 	constructor(
 		private authService: AuthenticationService,
 		private rest: ShopRestService,
-		private router: Router,
 		private formBuilder: FormBuilder,
 		private messageService: MessageService
 	) { }

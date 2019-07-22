@@ -27,6 +27,7 @@ import { AccountResetComponent } from './feature/account-reset/account-reset.com
 import { CarouselComponent, CarouselItem } from './feature/carousel/carousel.component';
 import { ProfileUpdateComponent } from './feature/profile-update/profile-update.component';
 import { PasswordUpdateComponent } from './feature/password-update/password-update.component';
+import { FileUploadComponent } from './feature/file-upload/file-upload.component';
 
 import { ShopRestService } from './service/shop-rest.service';
 import { MessageService } from './service/message.service';
@@ -99,7 +100,8 @@ const appRoutes: Routes = [
         UpdatepageComponent,
         ProfilepageComponent,
         ProfileUpdateComponent,
-        PasswordUpdateComponent
+        PasswordUpdateComponent,
+        FileUploadComponent
     ],
     imports: [
         RouterModule.forRoot(appRoutes,{ useHash: true }),
