@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MessageService } from '../../service/message.service';
 import { AuthenticationService } from '../../service/authentication.service';
+import { Constant } from 'src/app/object/constant';
 
 @Component({
 	selector: 'app-homepage',
@@ -11,6 +12,8 @@ import { AuthenticationService } from '../../service/authentication.service';
 export class HomepageComponent implements OnInit {
 
 	pictureSrc: String | ArrayBuffer = 'assets/images/default-pic.png';
+
+	carouselSrc = Constant.carouselSrc;
 
 	constructor(
 		private authService: AuthenticationService,
