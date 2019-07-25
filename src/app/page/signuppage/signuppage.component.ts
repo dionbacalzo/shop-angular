@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { MessageService } from '../../service/message.service';
+import { Constant } from 'src/app/object/constant';
 
 @Component({
 	selector: 'app-signuppage',
@@ -12,7 +13,7 @@ export class SignuppageComponent implements OnInit {
 	constructor(private titleService: Title, private messageService: MessageService) { }
 
 	ngOnInit() {
-		this.titleService.setTitle('Shop Display: Signup');
+		this.titleService.setTitle(Constant.pagetitle.signup);
 		this.messageService.clear();
 	}
 

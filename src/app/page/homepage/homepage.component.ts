@@ -22,7 +22,7 @@ export class HomepageComponent implements OnInit {
 	) { }
 
 	ngOnInit() {
-		this.titleService.setTitle('Shop Display: Home');
+		this.titleService.setTitle(Constant.pagetitle.home);
 		this.messageService.clear();		
 	}
 

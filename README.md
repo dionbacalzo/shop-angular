@@ -101,4 +101,4 @@ Run `npm install --save @angular/material @angular/cdk @angular/animations` to a
 ## References
 
 Thanks to vitaliy-bobrov in regards to The 404 request page 
-- made with [https://github.com/vitaliy-bobrov/ngx-smart-routing-demo](ngx-smart-routing-demo) for the  implementation of correct path suggestion using Levenshtein distance algorithm
+- made with [ngx-smart-routing-demo](https://github.com/vitaliy-bobrov/ngx-smart-routing-demo) for the  implementation of correct path suggestion using Levenshtein distance algorithm

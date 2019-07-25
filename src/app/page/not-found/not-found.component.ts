@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { MessageService } from '../../service/message.service';
 import { Util } from 'src/app/object/util';
 import { paths } from 'src/app/object/paths';
+import { Constant } from 'src/app/object/constant';
 
 @Component({
   selector: 'not-found',
@@ -18,7 +19,7 @@ export class NotFoundComponent implements OnInit {
   constructor(private route: ActivatedRoute, private titleService: Title, private messageService: MessageService) { }
 
   ngOnInit() {
-    this.titleService.setTitle('Page not found');
+    this.titleService.setTitle(Constant.pagetitle.notFound);
     this.messageService.clear();
 
     this.route.data.pipe(take(1))
