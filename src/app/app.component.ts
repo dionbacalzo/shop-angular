@@ -16,11 +16,11 @@ export class AppComponent implements OnInit {
 		}
 	}
 
-	logout() {
+	logout() {		
 		this.authService.logout().subscribe();
 	}
 
-	get isAuthenticated(): boolean {
+	get isAuthenticated(): boolean {		
 		return this.authService.authenticated;
 	}
 

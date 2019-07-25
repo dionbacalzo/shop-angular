@@ -97,3 +97,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## material
 
 Run `npm install --save @angular/material @angular/cdk @angular/animations` to add material
+
+## References
+
+Thanks to vitaliy-bobrov in regards to The 404 request page 
+- made with [https://github.com/vitaliy-bobrov/ngx-smart-routing-demo](ngx-smart-routing-demo) for the  implementation of correct path suggestion using Levenshtein distance algorithm

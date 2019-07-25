@@ -1,9 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 // material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -29,9 +29,9 @@ import { ProfileUpdateComponent } from './feature/profile-update/profile-update.
 import { PasswordUpdateComponent } from './feature/password-update/password-update.component';
 import { FileUploadComponent } from './feature/file-upload/file-upload.component';
 
+import { PathResolveService } from './service/path-resolve.service';
 import { ShopRestService } from './service/shop-rest.service';
 import { MessageService } from './service/message.service';
-import { AuthenticationService } from './service/authentication.service';
 import { AdminService } from './service/admin.service';
 import { UserService } from './service/user.service';
 
@@ -40,48 +40,7 @@ import { AdminpageComponent } from './page/adminpage/adminpage.component';
 import { SignuppageComponent } from './page/signuppage/signuppage.component';
 import { UpdatepageComponent } from './page/updatepage/updatepage.component';
 import { ProfilepageComponent } from './page/profilepage/profilepage.component';
-import { AuthGuard } from './auth.guard';
-import { PathLocationStrategy, LocationStrategy } from '@angular/common';
-
-const appRoutes: Routes = [
-    {
-        path: '',
-        redirectTo: 'shop/content',
-        pathMatch: 'full'
-    },
-    {
-        path: 'shop',
-        canActivate: [AuthGuard],
-        children: [
-            {
-                path: '',
-                redirectTo: 'content',
-                pathMatch: 'full'
-            },
-            {
-                path: 'content',
-                component: HomepageComponent
-            },
-            {
-                path: 'profile',
-                component: ProfilepageComponent
-            },
-            {
-                path: 'admin',
-                component: AdminpageComponent
-            },
-            {
-                path: 'signup',
-                component: SignuppageComponent
-            },
-            {
-                path: 'update',
-                component: UpdatepageComponent
-            }            
-        ]
-    }
-
-];
+import { NotFoundComponent } from './page/not-found/not-found.component';
 
 @NgModule({
     declarations: [
@@ -101,10 +60,11 @@ const appRoutes: Routes = [
         ProfilepageComponent,
         ProfileUpdateComponent,
         PasswordUpdateComponent,
-        FileUploadComponent
+        FileUploadComponent,
+        NotFoundComponent
     ],
     imports: [
-        RouterModule.forRoot(appRoutes,{ useHash: true }),
+        AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserModule,
@@ -121,12 +81,8 @@ const appRoutes: Routes = [
         MatProgressSpinnerModule
     ],
     providers: [
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: AuthenticationService,
-            multi: true
-        },
-        {provide: LocationStrategy, useClass: PathLocationStrategy},
+        AppRoutingModule,
+        PathResolveService,     
         MessageService,
         ShopRestService,
         AdminService,
