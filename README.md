@@ -3,7 +3,11 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.1.
 The backend of this project is the [Shop](https://github.com/dionbacalzo/Shop) repository
 
-# IDE
+# Dependencies
+
+Install [NodeJS](https://nodejs.org/en/download/)
+
+## IDE
 
 Download [Visual Studio Code](https://code.visualstudio.com/download)
 
