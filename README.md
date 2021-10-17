@@ -3,6 +3,10 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.1.
 The backend of this project is the [Shop](https://github.com/dionbacalzo/Shop) repository
 
+# IDE
+
+Download [Visual Studio Code](https://code.visualstudio.com/download)
+
 # Docker
 
  - Make sure that at the terminal you are in is at the root folder shop-angular/ before running the docker commands
