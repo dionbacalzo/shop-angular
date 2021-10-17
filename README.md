@@ -6,6 +6,7 @@ The backend of this project is the [Shop](https://github.com/dionbacalzo/Shop) r
 # Dependencies
 
 Install [NodeJS](https://nodejs.org/en/download/)
+Install Angular CLI globally `npm install -g @angular/cli`
 
 ## IDE
 
